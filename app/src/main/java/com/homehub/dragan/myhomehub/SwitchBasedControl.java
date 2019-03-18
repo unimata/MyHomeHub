@@ -6,7 +6,7 @@ public class SwitchBasedControl {
 
     private String LinkedDeviceId;
     private boolean SwitchState;
-    private Switch Device;
+
 
     public SwitchBasedControl(String deviceId, boolean state){
 

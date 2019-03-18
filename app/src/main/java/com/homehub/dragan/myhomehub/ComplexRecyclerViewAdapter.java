@@ -5,7 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     // The items to display in your RecyclerView
     private List<Object> items;
 
-    private final int USER = 0, IMAGE = 1, SWITCH = 2;
+    private final int USER = 0, IMAGE = 1, SWITCH = 2, SLIDER = 3;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ComplexRecyclerViewAdapter(List<Object> items) {
@@ -36,8 +37,9 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             return IMAGE;
         } else if (items.get(position) instanceof SwitchBasedControl) {
             return SWITCH;
+        } else if (items.get(position) instanceof SliderBasedControl) {
+            return SLIDER;
         }
-
         return -1;
     }
 
@@ -67,6 +69,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             case SWITCH:
                 View v3 = inflater.inflate(R.layout.switch_control_viewholder, viewGroup, false);
                 viewHolder = new SwitchControlViewHolder(v3);
+                break;
+            case SLIDER:
+                View v4 = inflater.inflate(R.layout.slider_control_viewholder, viewGroup, false);
+                viewHolder = new SliderControlViewHolder(v4);
                 break;
 
             default:
@@ -105,6 +111,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 SwitchControlViewHolder vh3 = (SwitchControlViewHolder) viewHolder;
                 configureSwitchViewHolder(vh3, position);
                 break;
+            case SLIDER:
+                SliderControlViewHolder vh4 = (SliderControlViewHolder) viewHolder;
+                configureSliderViewHolder(vh4, position);
+                break;
             default:
                 //skip it
                 break;
@@ -130,17 +140,28 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     private void configureViewHolder2(ViewHolder2 vh2) {
-        vh2.getImageView().setImageResource(R.drawable.ic_home_black_24dp);
+        vh2.getImageView().setImageResource(R.drawable.ic_launcher_foreground);
     }
 
     private void configureSwitchViewHolder(SwitchControlViewHolder vh3, int position) {
         SwitchBasedControl device = (SwitchBasedControl) items.get(position);
         if (device != null) {
-            vh3.getLabel1().setText("Name: " + device.getLinkedDeviceId());
+            vh3.getLabel1().setText(device.getLinkedDeviceId());
         }
 
         boolean state = device.getSwitchState();
 
         vh3.setControl(state);
     }
+
+    private void configureSliderViewHolder(final SliderControlViewHolder vh3, int position) {
+        SliderBasedControl device = (SliderBasedControl) items.get(position);
+
+        if (device != null) {
+            vh3.getLabel1().setText(device.getLinkedDeviceId());
+            //vh3.getSeekBar(device.getSlider());
+            vh3.getValue().setText(Double.toString(device.getProgress()));// setCurrentValue(57);
+        }
+    }
+
 }

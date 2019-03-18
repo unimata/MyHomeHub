@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Object> items = new ArrayList<>();
 
         items.add(new User("Dany Targaryen", "Valyria"));
+        items.add(new SliderBasedControl("Nest Thermostat",23));
         items.add(new SwitchBasedControl("hue bulb 1", true));
         items.add(new User("Rob Stark", "Winterfell"));
         items.add(new SwitchBasedControl("hue bulb 2", false));
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
