@@ -1,10 +1,11 @@
-package com.roomr.dragan.myhomehub;
+package com.homehub.dragan.myhomehub;
 
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     // The items to display in your RecyclerView
     private List<Object> items;
 
-    private final int USER = 0, IMAGE = 1;
+    private final int USER = 0, IMAGE = 1, SWITCH = 2;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ComplexRecyclerViewAdapter(List<Object> items) {
@@ -33,7 +34,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             return USER;
         } else if (items.get(position) instanceof String) {
             return IMAGE;
+        } else if (items.get(position) instanceof SwitchBasedControl) {
+            return SWITCH;
         }
+
         return -1;
     }
 
@@ -59,6 +63,12 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 View v2 = inflater.inflate(R.layout.layout_viewholder2, viewGroup, false);
                 viewHolder = new ViewHolder2(v2);
                 break;
+
+            case SWITCH:
+                View v3 = inflater.inflate(R.layout.switch_control_viewholder, viewGroup, false);
+                viewHolder = new SwitchControlViewHolder(v3);
+                break;
+
             default:
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, viewGroup, false);
                 viewHolder = new RecyclerView.ViewHolder(v) {
@@ -91,9 +101,12 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 ViewHolder2 vh2 = (ViewHolder2) viewHolder;
                 configureViewHolder2(vh2);
                 break;
+            case SWITCH:
+                SwitchControlViewHolder vh3 = (SwitchControlViewHolder) viewHolder;
+                configureSwitchViewHolder(vh3, position);
+                break;
             default:
-                ViewHolder1 vh = (ViewHolder1) viewHolder;
-                configureDefaultViewHolder(vh, position);
+                //skip it
                 break;
         }
     }
@@ -117,6 +130,17 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     private void configureViewHolder2(ViewHolder2 vh2) {
-        vh2.getImageView().setImageResource(R.drawable.ic_launcher_background);
+        vh2.getImageView().setImageResource(R.drawable.ic_home_black_24dp);
+    }
+
+    private void configureSwitchViewHolder(SwitchControlViewHolder vh3, int position) {
+        SwitchBasedControl device = (SwitchBasedControl) items.get(position);
+        if (device != null) {
+            vh3.getLabel1().setText("Name: " + device.getLinkedDeviceId());
+        }
+
+        boolean state = device.getSwitchState();
+
+        vh3.setControl(state);
     }
 }

@@ -1,4 +1,4 @@
-package com.roomr.dragan.myhomehub;
+package com.homehub.dragan.myhomehub;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
