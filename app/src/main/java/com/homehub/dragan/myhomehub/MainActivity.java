@@ -25,14 +25,16 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Object> getSampleArrayList() {
         ArrayList<Object> items = new ArrayList<>();
 
-        items.add(new User("Dany Targaryen", "Valyria"));
+        //items.add(new User("Dany Targaryen", "Valyria"));
         items.add(new SliderBasedControl("Nest Thermostat",23));
         items.add(new SwitchBasedControl("hue bulb 1", true));
-        items.add(new User("Rob Stark", "Winterfell"));
+        //items.add(new User("Rob Stark", "Winterfell"));
         items.add(new SwitchBasedControl("hue bulb 2", false));
-        items.add("image");
-        items.add(new User("Jon Snow", "Castle Black"));
-        items.add("image");
+        items.add(new SwitchBasedControl("hue bulb 3", false));
+
+        //items.add("image");
+        //items.add(new User("Jon Snow", "Castle Black"));
+        //items.add("image");
         return items;
     }
 
@@ -41,16 +43,21 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
+            Intent intent;
             switch (item.getItemId()) {
 
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_account:
-                    mTextMessage.setText(R.string.title_account);
+
+                    intent = new Intent(MainActivity.this, AccountActivity.class);
+                    //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
+                    startActivity(intent);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_automation);
+                case R.id.navigation_automation:
+
+                    intent = new Intent(MainActivity.this, AutomationActivity.class);
+                    startActivity(intent);
                     return true;
             }
             return false;

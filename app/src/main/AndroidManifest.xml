@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AccountActivity"
+            android:label="@string/title_activity_account"></activity>
+        <activity
+            android:name=".AutomationActivity"
+            android:label="@string/title_activity_automation" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
