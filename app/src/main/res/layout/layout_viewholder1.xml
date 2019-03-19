@@ -3,7 +3,7 @@
     android:id="@+id/llContainer"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="5dp">
 
     <TextView
@@ -12,13 +12,15 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:text="TEST"/>
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:text="TEST"/>
 
 </LinearLayout>

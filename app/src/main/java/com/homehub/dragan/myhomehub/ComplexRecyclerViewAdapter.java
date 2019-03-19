@@ -147,6 +147,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         SwitchBasedControl device = (SwitchBasedControl) items.get(position);
         if (device != null) {
             vh3.getLabel1().setText(device.getLinkedDeviceId());
+            //vh3.getControl().setText(Boolean.toString(device.getSwitchState()));
         }
 
         boolean state = device.getSwitchState();
@@ -161,6 +162,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             vh3.getLabel1().setText(device.getLinkedDeviceId());
             //vh3.getSeekBar(device.getSlider());
             vh3.getValue().setText(Double.toString(device.getProgress()));// setCurrentValue(57);
+            vh3.setCurrentValue(device.getProgress());
         }
     }
 

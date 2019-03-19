@@ -22,7 +22,7 @@ public class SliderControlViewHolder extends RecyclerView.ViewHolder {
         setValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setCurrentValue(progress);
+                setCurrentValue(Math.round(progress));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -33,8 +33,8 @@ public class SliderControlViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setSeekBar(SeekBar s){
-        setValue = s;
+    public void setSeekBar(float s){
+        setValue.setProgress(Math.round(s));
     }
 
 
@@ -46,8 +46,10 @@ public class SliderControlViewHolder extends RecyclerView.ViewHolder {
     public TextView getValue() {
         return CurrentValue;
     }
+
     public void setCurrentValue(float f){
         CurrentValue.setText(Float.toString(f));
+        setSeekBar(f);
     }
 
     public void setValue(SeekBar setValue) {

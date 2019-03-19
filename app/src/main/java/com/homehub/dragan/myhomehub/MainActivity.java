@@ -2,6 +2,7 @@ package com.homehub.dragan.myhomehub;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MediaPlayer mPlayer;
     private Context mContext;
     private RecyclerView recyclerView;
     private TextView mTextMessage;
@@ -26,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Object> items = new ArrayList<>();
 
         //items.add(new User("Dany Targaryen", "Valyria"));
-        items.add(new SliderBasedControl("Nest Thermostat",23));
-        items.add(new SwitchBasedControl("hue bulb 1", true));
-        //items.add(new User("Rob Stark", "Winterfell"));
-        items.add(new SwitchBasedControl("hue bulb 2", false));
-        items.add(new SwitchBasedControl("hue bulb 3", false));
+        items.add(new SliderBasedControl("Thermostat",23));
+        items.add(new SwitchBasedControl("Master Bedroom Lights", true));
+        items.add(new SwitchBasedControl("Foyer Lights", false));
+        items.add(new SwitchBasedControl("TV Backlighting", false));
 
         //items.add("image");
         //items.add(new User("Jon Snow", "Castle Black"));
