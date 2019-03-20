@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class AutomationActivity extends AppCompatActivity {
 
@@ -35,7 +37,18 @@ public class AutomationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automation);
 
+        Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        btnNewRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
