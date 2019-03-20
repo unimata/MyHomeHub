@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_automation">Automation</string>
     <string name="switchDevice">Lights</string>
+    <string name="title_activity_device_control">DeviceControl</string>
 </resources>
