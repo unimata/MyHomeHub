@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         items.add("image");
         items.add(new User("Jon Snow", "Castle Black"));
         items.add("image");
+        items.add(new User("Jack", "The Big Land"));
         return items;
     }
 
