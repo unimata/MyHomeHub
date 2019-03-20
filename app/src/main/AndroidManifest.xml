@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DeviceControl"></activity>
         <activity
             android:name=".AccountActivity"
-            android:label="@string/title_activity_account"></activity>
+            android:label="@string/title_activity_account" />
         <activity
             android:name=".AutomationActivity"
             android:label="@string/title_activity_automation" />
