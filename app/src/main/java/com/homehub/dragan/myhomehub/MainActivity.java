@@ -77,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
 
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.recyclerView);
-        rvContacts.setAdapter(new ComplexRecyclerViewAdapter(getSampleArrayList()));
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+       refreshDeviceList();
 
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -87,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    //used to initially load in device list, and to reload after adding new device to list
+    public void refreshDeviceList(){
+        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.recyclerView);
+        rvContacts.setAdapter(new ComplexRecyclerViewAdapter(getSampleArrayList()));
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
