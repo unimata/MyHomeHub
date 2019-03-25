@@ -24,7 +24,7 @@ public class AddNewDeviceViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                mContext = v.getContext();
-               Toast.makeText(mContext, "Added New Device", Toast.LENGTH_SHORT).show();
+               Toast.makeText(mContext, "Add New Device", Toast.LENGTH_SHORT).show();
                 intent = new Intent(v.getContext(), AddDeviceActivity.class);
                 //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                 mContext.startActivity(intent);
