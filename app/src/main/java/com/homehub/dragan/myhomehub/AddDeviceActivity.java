@@ -7,7 +7,6 @@ import android.view.View;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -28,8 +27,8 @@ public class AddDeviceActivity extends AppCompatActivity {
     private Context mContext;
     private int foundDeviceCount;
 
-    ArrayList<String> rawDeviceDataset = new ArrayList<>();
-    ArrayList<String> filteredDeviceDataset = new ArrayList<>();
+    ArrayList<String> rawDevices = new ArrayList<>();
+    ArrayList<String> filteredDevices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(filteredDeviceDataset);
+        mAdapter = new MyAdapter(filteredDevices);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -82,18 +81,23 @@ public class AddDeviceActivity extends AppCompatActivity {
 
             @Override
             public void OnFoundNewDevice(UPnPDevice device) {
-                rawDeviceDataset.add(device.toString());
+                rawDevices.add(device.toString());
             }
 
             @Override
             public void OnFinish(HashSet<UPnPDevice> devices) {
                 for (UPnPDevice device : devices) {
                     // To do something
-                    if (!filteredDeviceDataset.contains(device.toString())) {
-                        filteredDeviceDataset.add(device.toString());
+                    if (!filteredDevices.contains(device.toString())) {
+                        filteredDevices.add(device.toString());
                         mAdapter.notifyDataSetChanged();
                         foundDeviceCount++;
                         Toast.makeText(mContext, "Found new device", Toast.LENGTH_SHORT).show();
+
+                        /** when we add support for specific products, be sure to add code here that
+                         * re-filters the dataset for supported devices, as adding an unsupported
+                         * device may crash the app. This just shows everything on the network raw
+                         **/
                     }
 
                 }

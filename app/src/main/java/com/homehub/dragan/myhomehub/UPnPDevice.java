@@ -27,7 +27,7 @@ public class UPnPDevice {
     // XML content
     private String mXML;
 
-    // From desctiption XML
+    // From description XML
     private String mDeviceType;
     private String mFriendlyName;
     private String mPresentationURL;
@@ -55,10 +55,10 @@ public class UPnPDevice {
     }
 
     public String toString() {
-        return  "FriendlyName: " + mFriendlyName + LINE_END +
+        return  "Friendly Name: " + mFriendlyName + LINE_END +
                 //"ModelName: " + mModelName + LINE_END +
-                "HostAddress: " + mHostAddress + LINE_END;// +
-                //"Location: " + mLocation + LINE_END ;//+
+                "Host Address: " + mHostAddress + LINE_END +
+                //"Location: " + mLocation + LINE_END+
                 //"Server: " + mServer + LINE_END +
                 //"USN: " + mUSN + LINE_END +
                 //"ST: " + mST + LINE_END +
@@ -66,9 +66,9 @@ public class UPnPDevice {
                 //"PresentationURL: " + mPresentationURL + LINE_END +
                 //"SerialNumber: " + mSerialNumber + LINE_END +
                 //"ModelURL: " + mModelURL + LINE_END +
-                //"ModelNumber: " + mModelNumber + LINE_END;// +
-                //"Manufacturer: " + mManufacturer;// + LINE_END +
-                // "ManufacturerURL: " + mManufacturerURL + LINE_END +
+                "Model Number: " + mModelNumber + LINE_END +
+                "Manufacturer: " + mManufacturer;// + LINE_END +
+                        //"ManufacturerURL: " + mManufacturerURL + LINE_END +
                 //"UDN: " + mUDN + LINE_END;// +
                 //"URLBase: " + mURLBase;
     }
@@ -104,7 +104,7 @@ public class UPnPDevice {
         DescriptionModel model = gsonXml.fromXml(xml, DescriptionModel.class);
 
         this.mFriendlyName = model.device.friendlyName;
-        /**this.mDeviceType = model.device.deviceType;
+        this.mDeviceType = model.device.deviceType;
         this.mPresentationURL = model.device.presentationURL;
         this.mSerialNumber = model.device.serialNumber;
         this.mModelName = model.device.modelName;
@@ -113,7 +113,7 @@ public class UPnPDevice {
         this.mManufacturer = model.device.manufacturer;
         this.mManufacturerURL = model.device.manufacturerURL;
         this.mUDN = model.device.UDN;
-        this.mURLBase = model.URLBase;**/
+        this.mURLBase = model.URLBase;
     }
 
     private static class Device {
