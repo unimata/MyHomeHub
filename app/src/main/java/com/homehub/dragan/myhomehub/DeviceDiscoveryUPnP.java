@@ -22,7 +22,7 @@ public class DeviceDiscoveryUPnP extends AsyncTask {
 
     private static final String TAG = DeviceDiscoveryUPnP.class.getSimpleName();
 
-    private static int DISCOVER_TIMEOUT = 1500;
+    private static int DISCOVER_TIMEOUT = 5000;
     private static final String LINE_END = "\r\n";
     private static final String DEFAULT_QUERY = "M-SEARCH * HTTP/1.1" + LINE_END +
             "HOST: 239.255.255.250:1900" + LINE_END +
@@ -82,7 +82,7 @@ public class DeviceDiscoveryUPnP extends AsyncTask {
         WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         if(wifi != null) {
             WifiManager.MulticastLock lock = wifi.createMulticastLock("The Lock");
-            lock.acquire();
+            lock.acquire(); //if you crashed here, you dont have the right permissons
             DatagramSocket socket = null;
             try {
                 InetAddress group = InetAddress.getByName(mInetAddress);

@@ -10,6 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.homehub.dragan.myhomehub.AddDeviceActivity">
 
+    <TextView
+        android:id="@+id/textViewDeviceCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:lineSpacingExtra="24sp"
+        android:text="# here"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
 
     <ProgressBar
@@ -32,11 +43,16 @@
         android:text="Scanning For New Devices"
         android:visibility="visible"/>
 
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="50dp"
         android:visibility="invisible" />
 
 
