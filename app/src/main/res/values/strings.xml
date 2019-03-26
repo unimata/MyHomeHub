@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">MyHomeHub</string>
+    <string name="app_name">My Home Hub</string>
     <string name="title_account">Account</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_automation">Automation</string>
     <string name="switchDevice">Lights</string>
+    <string name="title_activity_automation">Automation</string>
+    <string name="title_home">Home</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_account">Account</string>
+    <string name="title_activity_add_device">Add Device</string>
+    <string name="action_settings">Settings</string>
 </resources>

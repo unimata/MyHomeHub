@@ -1,12 +1,12 @@
 package com.homehub.dragan.myhomehub;
 
-import android.widget.Switch;
 
 public class SwitchBasedControl {
 
     private String LinkedDeviceId;
     private boolean SwitchState;
-    private Switch Device;
+
+
 
     public SwitchBasedControl(String deviceId, boolean state){
 
