@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.homehub.dragan.myhomehub.DeviceDiscoveryUPnP;
+import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UPnPDevice;
 
 import java.util.ArrayList;
 import java.util.HashSet;

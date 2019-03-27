@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+
+import com.homehub.dragan.myhomehub.Activities.AddDeviceActivity;
+import com.homehub.dragan.myhomehub.R;
 
 
 public class AddNewDeviceViewHolder extends RecyclerView.ViewHolder {

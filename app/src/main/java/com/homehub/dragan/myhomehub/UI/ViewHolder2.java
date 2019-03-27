@@ -1,8 +1,10 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.homehub.dragan.myhomehub.R;
 
 public class ViewHolder2 extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
+import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
+import com.homehub.dragan.myhomehub.UI.SwitchBasedControl;
 
 import java.util.ArrayList;
 
