@@ -10,4 +10,11 @@
     <string name="title_activity_account">Account</string>
     <string name="title_activity_add_device">Add Device</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="AccountMenuOptions">
+        <item>General Form</item>
+        <item>Device Registrations</item>
+        <item>Application Settings</item>
+    </string-array>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Classes;
 
 class User {
     private String Name;
