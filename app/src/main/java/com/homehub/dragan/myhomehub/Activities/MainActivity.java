@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
 import com.homehub.dragan.myhomehub.R;
 import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
         mContext = getApplicationContext();
 
        refreshDeviceList();
@@ -124,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.lblLogout:
                 Toast.makeText(mContext, "Logout", Toast.LENGTH_SHORT).show();
-               // Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                //startActivity(i);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
