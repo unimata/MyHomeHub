@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,12 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
+import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
+import com.homehub.dragan.myhomehub.UI.SwitchBasedControl;
 
 import java.util.ArrayList;
 
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         items.add(new SwitchBasedControl("Master Bedroom Lights", true));
         items.add(new SwitchBasedControl("Foyer Lights", false));
         items.add(new SwitchBasedControl("TV Backlighting", false));
+        items.add(new SliderBasedControl("Sonos Volume",70));
 
         //items.add("image");
         //items.add(new User("Jon Snow", "Castle Black"));
@@ -57,11 +64,13 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, AccountActivity.class);
                     //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
+                    MainActivity.super.finish();
                     return true;
                 case R.id.navigation_automation:
 
                     intent = new Intent(MainActivity.this, AutomationActivity.class);
                     startActivity(intent);
+                    MainActivity.super.finish();
                     return true;
             }
             return false;
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
         mContext = getApplicationContext();
 
        refreshDeviceList();
@@ -82,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
 
 
@@ -114,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.lblLogout:
                 Toast.makeText(mContext, "Logout", Toast.LENGTH_SHORT).show();
-               // Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                //startActivity(i);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,7 +1,9 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.homehub.dragan.myhomehub.R;
 
 public class CreateRoutineActivity extends AppCompatActivity {
 

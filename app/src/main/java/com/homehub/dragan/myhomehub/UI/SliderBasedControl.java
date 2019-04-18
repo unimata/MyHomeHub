@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 
 import android.widget.SeekBar;

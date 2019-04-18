@@ -1,9 +1,11 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.homehub.dragan.myhomehub.R;
 
 
 public class SliderControlViewHolder extends RecyclerView.ViewHolder {

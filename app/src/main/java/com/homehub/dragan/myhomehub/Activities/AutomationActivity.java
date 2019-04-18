@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.homehub.dragan.myhomehub.R;
 
 public class AutomationActivity extends AppCompatActivity {
 
@@ -18,12 +20,16 @@ public class AutomationActivity extends AppCompatActivity {
             Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
+                    intent = new Intent(AutomationActivity.this, MainActivity.class);
+                    //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
+                    startActivity(intent);
                     AutomationActivity.super.finish();
                     return true;
                 case R.id.navigation_account:
                     intent = new Intent(AutomationActivity.this, AccountActivity.class);
                     //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
+                    AutomationActivity.super.finish();
                     return true;
                 case R.id.navigation_automation:
                     return true;
@@ -41,6 +47,7 @@ public class AutomationActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_automation);
 
         btnNewRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
