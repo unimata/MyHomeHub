@@ -20,12 +20,16 @@ public class AutomationActivity extends AppCompatActivity {
             Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
+                    intent = new Intent(AutomationActivity.this, MainActivity.class);
+                    //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
+                    startActivity(intent);
                     AutomationActivity.super.finish();
                     return true;
                 case R.id.navigation_account:
                     intent = new Intent(AutomationActivity.this, AccountActivity.class);
                     //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
+                    AutomationActivity.super.finish();
                     return true;
                 case R.id.navigation_automation:
                     return true;
@@ -43,6 +47,7 @@ public class AutomationActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_automation);
 
         btnNewRoutine.setOnClickListener(new View.OnClickListener() {
             @Override

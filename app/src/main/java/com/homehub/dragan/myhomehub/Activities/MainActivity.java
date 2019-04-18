@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         items.add(new SwitchBasedControl("Master Bedroom Lights", true));
         items.add(new SwitchBasedControl("Foyer Lights", false));
         items.add(new SwitchBasedControl("TV Backlighting", false));
+        items.add(new SliderBasedControl("Sonos Volume",70));
 
         //items.add("image");
         //items.add(new User("Jon Snow", "Castle Black"));
@@ -62,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, AccountActivity.class);
                     //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
+                    MainActivity.super.finish();
                     return true;
                 case R.id.navigation_automation:
 
                     intent = new Intent(MainActivity.this, AutomationActivity.class);
                     startActivity(intent);
+                    MainActivity.super.finish();
                     return true;
             }
             return false;
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
 
 
