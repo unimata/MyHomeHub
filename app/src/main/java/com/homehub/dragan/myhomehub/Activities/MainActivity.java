@@ -39,11 +39,8 @@ public class MainActivity extends AppCompatActivity {
         items.add(new SwitchBasedControl("Master Bedroom Lights", true));
         items.add(new SwitchBasedControl("Foyer Lights", false));
         items.add(new SwitchBasedControl("TV Backlighting", false));
-        items.add(new SliderBasedControl("Sonos Volume",70));
+        items.add(new SliderBasedControl("Sonos",70));
 
-        //items.add("image");
-        //items.add(new User("Jon Snow", "Castle Black"));
-        //items.add("image");
         items.add(true);//Keep this at the end always
 
         return items;
