@@ -11,7 +11,8 @@ import com.homehub.dragan.myhomehub.R;
 
 import java.util.List;
 
-public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ComplexRecyclerViewAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // The items to display in your RecyclerView
     private List<Object> items;

@@ -165,7 +165,8 @@ public class DeviceDiscoveryUPnP extends AsyncTask {
         }
     }
 
-    public static boolean discoveryDevices(Activity activity, OnDiscoveryListener listener, String customQuery, String address, int port) {
+    public static boolean discoveryDevices(Activity activity, OnDiscoveryListener listener,
+                                           String customQuery, String address, int port) {
         DeviceDiscoveryUPnP discover = new DeviceDiscoveryUPnP(activity, listener, customQuery, address, port);
         discover.execute();
         try {

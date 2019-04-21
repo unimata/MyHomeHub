@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private FirebaseApp firebaseApp;
     private FirebaseAuth mAuth;
     private Button _loginButton;
     private TextView _signupButton;

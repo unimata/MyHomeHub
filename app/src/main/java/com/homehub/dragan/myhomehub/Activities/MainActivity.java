@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +17,9 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
 import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
 import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.Classes.DeviceList;
 import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
 import com.homehub.dragan.myhomehub.UI.SwitchBasedControl;
 
@@ -26,25 +27,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public ArrayList<Object> items = DeviceList.getInstance().getDevices();
+    //public DeviceList devicelist =
+
     private MediaPlayer mPlayer;
+    //private FirebaseAuth mAuth;
     private Context mContext;
     private RecyclerView recyclerView;
     private TextView mTextMessage;
     private FloatingActionButton mAddButton;
 
-    private ArrayList<Object> getSampleArrayList() {
-        ArrayList<Object> items = new ArrayList<>();
 
-        items.add(new SliderBasedControl("Thermostat",23));
-        items.add(new SwitchBasedControl("Master Bedroom Lights", true));
-        items.add(new SwitchBasedControl("Foyer Lights", false));
-        items.add(new SwitchBasedControl("TV Backlighting", false));
-        items.add(new SliderBasedControl("Sonos",70));
-
-        items.add(true);//Keep this at the end always
-
-        return items;
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void initDevices(){
+
+    }
+
+    private ArrayList<Object> getDeviceList() {
+        ArrayList<Object> list = items;
+        //Log.d("debuggin", list.toString());
+        return list;
+    }
 
 
     @Override
@@ -81,25 +83,24 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseApp.initializeApp(this);
+        //FirebaseApp.initializeApp(this);
         mContext = getApplicationContext();
 
-       refreshDeviceList();
+        //initDevices();
+
+        refreshDeviceList();
 
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         navigation.setSelectedItemId(R.id.navigation_dashboard);
-
-
-
     }
 
     //used to initially load in device list, and to reload after adding new device to list
     public void refreshDeviceList(){
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.recyclerView);
-        rvContacts.setAdapter(new ComplexRecyclerViewAdapter(getSampleArrayList()));
+        rvContacts.setAdapter(new ComplexRecyclerViewAdapter(getDeviceList()));
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
                 //Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 //startActivity(i);
+                refreshDeviceList();
                 return true;
             case R.id.lblLogout:
                 Toast.makeText(mContext, "Logout", Toast.LENGTH_SHORT).show();
