@@ -44,6 +44,7 @@ public class AutomationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_automation);
 
         Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
+        Button btnManageRoutines = (Button) findViewById(R.id.btnManageRoutines);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -54,6 +55,15 @@ public class AutomationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent;
                 intent = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnManageRoutines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), ManageRoutinesActivity.class);
                 startActivity(intent);
             }
         });
