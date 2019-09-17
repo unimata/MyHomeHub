@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Activities.ManageRoutinesActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvRoutines"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="223dp"
+        tools:layout_editor_absoluteY="201dp" />
 </android.support.constraint.ConstraintLayout>
