@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.homehub.dragan.myhomehub.Classes.HomeHub;
 import com.homehub.dragan.myhomehub.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -71,8 +73,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    public static final String EXTRA_IPADDRESS = "ip_address";
+    public static final String EXTRA_FULL_URI = "full_uri";
+    public static final String EXTRA_PASSWORD = "password";
+    public static final String EXTRA_LAST_REQUEST = "last_request";
+    private SharedPreferences mSharedPref;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
+    private EditText mIpAddressView;
     private EditText mPasswordView;
     private FirebaseApp firebaseApp;
     private FirebaseAuth mAuth;
@@ -85,10 +94,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+        HomeHub.getInstance(); //create the HH websocket
 
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.input_email);
+        //mEmailView = (AutoCompleteTextView) findViewById(R.id.input_email);
+        mIpAddressView = (EditText) findViewById(R.id.input_URL);
+
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.input_password);
@@ -247,11 +259,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        //mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        //String email = mEmailView.getText().toString();
+        String baseURL = mIpAddressView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -265,13 +278,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        /**if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            cancel = true;
+         }**/
+        // Check for a valid email address2.
+        if (TextUtils.isEmpty(baseURL)) {
+            mIpAddressView.setError(getString(R.string.error_field_required));
+            focusView = mIpAddressView;
+            cancel = true;
+        } else if (!(baseURL.startsWith("http://") || baseURL.startsWith("https://"))) {
+            //mIpAddressView.setError(getString(R.string.error_invalid_baseurl));
+            focusView = mIpAddressView;
             cancel = true;
         }
 
@@ -280,9 +303,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
+            String host = Uri.parse(baseURL).getHost();
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(baseURL, host, password);
             mAuthTask.execute((Void) null);
         }
     }
@@ -324,7 +348,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cursor.moveToNext();
         }
 
-        addEmailsToAutoComplete(emails);
+        //addEmailsToAutoComplete(emails);
     }
 
     @Override
@@ -338,7 +362,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        //mEmailView.setAdapter(adapter);
     }
 
 
@@ -358,34 +382,59 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        //private final String mEmail;
+        private final String mUri;
+        private final String mIpAddress;
         private final String mPassword;
+        private final String mBearerHeader;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String uri, String ipAddress, String password) {
+            //mEmail = email;
+            mUri = uri;
+            mIpAddress = ipAddress;
             mPassword = password;
+            mBearerHeader = "Bearer " + password;
+
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                SharedPreferences.Editor editor = mSharedPref.edit();
+                editor.putString(EXTRA_FULL_URI, mUri);
+                editor.putString(EXTRA_IPADDRESS, mIpAddress);
+                editor.putString(EXTRA_PASSWORD, mPassword);
+                editor.putInt("connectionIndex", 0);
+                editor.putLong(EXTRA_LAST_REQUEST, System.currentTimeMillis()).apply();
+                editor.apply();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                Toast bread;
+                if(HomeHub.getInstance().isConnected()){
+                    //CommonUtil.logLargeString("YouQi", "CONNECTED");
+                }else {
+                    //CommonUtil.logLargeString("YouQi", "NOT CONNECTED");
                 }
-            }
 
-            // TODO: register the new account here.
+                HomeHub.getInstance().isConnected();
+
+
+
+//                DatabaseManager databaseManager = DatabaseManager.getInstance(ConnectActivity.this);
+//                databaseManager.updateTables(bootstrapResponse);
+//                databaseManager.addConnection(new HomeAssistantServer(mUri, mPassword));
+//                ArrayList<Entity> entities = databaseManager.getEntities();
+//                for (Entity entity : entities) {
+//                    Log.d("YouQi", "Entity: " + entity.entityId);
+//                }
+
+                //Crashlytics.setUserIdentifier(settings.bootstrapResponse.profile.loginId);
+
+            } catch (Exception e) {
+                Log.d("YouQi", "ERROR!");
+                e.printStackTrace();
+                //Crashlytics.logException(e);
+                return false; //ErrorMessage(e.getMessage(), e.toString());
+            }
             return true;
         }
 
@@ -394,8 +443,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             if (success) {
                 finish();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
