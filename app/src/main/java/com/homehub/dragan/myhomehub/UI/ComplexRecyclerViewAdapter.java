@@ -1,20 +1,23 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+
+import com.homehub.dragan.myhomehub.R;
 
 import java.util.List;
 
-public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ComplexRecyclerViewAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // The items to display in your RecyclerView
     private List<Object> items;
 
-    private final int USER = 0, IMAGE = 1, SWITCH = 2;
+    private final int NEW = 0, IMAGE = 1, SWITCH = 2, SLIDER = 3;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ComplexRecyclerViewAdapter(List<Object> items) {
@@ -30,14 +33,15 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     //Returns the view type of the item at position for the purposes of view recycling.
     @Override
     public int getItemViewType(int position) {
-        if (items.get(position) instanceof User) {
-            return USER;
+        if (items.get(position) instanceof Boolean) {
+            return NEW;
         } else if (items.get(position) instanceof String) {
             return IMAGE;
         } else if (items.get(position) instanceof SwitchBasedControl) {
             return SWITCH;
+        } else if (items.get(position) instanceof SliderBasedControl) {
+            return SLIDER;
         }
-
         return -1;
     }
 
@@ -55,9 +59,9 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
         switch (viewType) {
-            case USER:
-                View v1 = inflater.inflate(R.layout.layout_viewholder1, viewGroup, false);
-                viewHolder = new ViewHolder1(v1);
+            case NEW:
+                View v1 = inflater.inflate(R.layout.layout_addnewdevice, viewGroup, false);
+                viewHolder = new AddNewDeviceViewHolder(v1);
                 break;
             case IMAGE:
                 View v2 = inflater.inflate(R.layout.layout_viewholder2, viewGroup, false);
@@ -67,6 +71,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             case SWITCH:
                 View v3 = inflater.inflate(R.layout.switch_control_viewholder, viewGroup, false);
                 viewHolder = new SwitchControlViewHolder(v3);
+                break;
+            case SLIDER:
+                View v4 = inflater.inflate(R.layout.slider_control_viewholder, viewGroup, false);
+                viewHolder = new SliderControlViewHolder(v4);
                 break;
 
             default:
@@ -93,9 +101,9 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
-            case USER:
-                ViewHolder1 vh1 = (ViewHolder1) viewHolder;
-                configureViewHolder1(vh1, position);
+            case NEW:
+                AddNewDeviceViewHolder vh1 = (AddNewDeviceViewHolder) viewHolder;
+                configureAddNewDeviceViewHolder(vh1, position);
                 break;
             case IMAGE:
                 ViewHolder2 vh2 = (ViewHolder2) viewHolder;
@@ -105,6 +113,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 SwitchControlViewHolder vh3 = (SwitchControlViewHolder) viewHolder;
                 configureSwitchViewHolder(vh3, position);
                 break;
+            case SLIDER:
+                SliderControlViewHolder vh4 = (SliderControlViewHolder) viewHolder;
+                configureSliderViewHolder(vh4, position);
+                break;
             default:
                 //skip it
                 break;
@@ -113,34 +125,38 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
 
-    private void configureDefaultViewHolder(ViewHolder1 vh, int position) {
-        User user = (User) items.get(position);
-        if (user != null) {
-            vh.getLabel1().setText("Name: " + user.getName());
-            vh.getLabel2().setText("Hometown: " + user.getLocation());
-        }
+    private void configureAddNewDeviceViewHolder(AddNewDeviceViewHolder vh, int position) {
+         FloatingActionButton addbutton = (FloatingActionButton) items.get(position);
+         addbutton = vh.getAddButton();
+
     }
 
-    private void configureViewHolder1(ViewHolder1 vh1, int position) {
-        User user = (User) items.get(position);
-        if (user != null) {
-            vh1.getLabel1().setText("Name: " + user.getName());
-            vh1.getLabel2().setText("Hometown: " + user.getLocation());
-        }
-    }
 
     private void configureViewHolder2(ViewHolder2 vh2) {
-        vh2.getImageView().setImageResource(R.drawable.ic_home_black_24dp);
+        vh2.getImageView().setImageResource(R.drawable.ic_launcher_foreground);
     }
 
     private void configureSwitchViewHolder(SwitchControlViewHolder vh3, int position) {
         SwitchBasedControl device = (SwitchBasedControl) items.get(position);
         if (device != null) {
-            vh3.getLabel1().setText("Name: " + device.getLinkedDeviceId());
+            vh3.getLabel1().setText(device.getLinkedDeviceId());
+            //vh3.getControl().setText(Boolean.toString(device.getSwitchState()));
         }
 
         boolean state = device.getSwitchState();
 
         vh3.setControl(state);
     }
+
+    private void configureSliderViewHolder(final SliderControlViewHolder vh3, int position) {
+        SliderBasedControl device = (SliderBasedControl) items.get(position);
+
+        if (device != null) {
+            vh3.getLabel1().setText(device.getLinkedDeviceId());
+            //vh3.getSeekBar(device.getSlider());
+            vh3.getValue().setText(Double.toString(device.getProgress()));// setCurrentValue(57);
+            vh3.setCurrentValue(device.getProgress());
+        }
+    }
+
 }

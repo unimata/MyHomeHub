@@ -1,21 +1,37 @@
-package com.homehub.dragan.myhomehub;
+package com.homehub.dragan.myhomehub.UI;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.homehub.dragan.myhomehub.R;
+
 
 public class SwitchControlViewHolder extends RecyclerView.ViewHolder {
 
     private TextView label1;
     private Switch control;
+    private boolean State;
 
     public SwitchControlViewHolder(View v) {
         super(v);
         label1 = (TextView) v.findViewById(R.id.text1);
         control = (Switch) v.findViewById(R.id.switch1);
 
+        control.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!State) {
+                    control.setChecked(true);
+                    setControl(true);
+                }
+                else if (State){
+                    control.setChecked(false);
+                    setControl(false);
+                }
+            }
+        });
 
     }
 
@@ -36,11 +52,14 @@ public class SwitchControlViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setControl(boolean state) {
+        State = state;
         if(state==true){
             control.setChecked(true);
+            control.setText("On");
         }
         else{
             control.setChecked(false);
+            control.setText("Off");
         }
     }
 }
