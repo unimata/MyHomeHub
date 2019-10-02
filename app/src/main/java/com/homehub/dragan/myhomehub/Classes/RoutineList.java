@@ -14,8 +14,7 @@ public class RoutineList {
     private RoutineList(){
 
         routines.add(new Routine("Bulb"));
-
-        routines.add(true);//Keep this at the end always)
+        routines.add(new Routine("Bolbus"));
     }
 
     public static RoutineList getInstance(){

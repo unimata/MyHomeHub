@@ -126,8 +126,8 @@ public class ComplexRecyclerViewAdapter
 
 
     private void configureAddNewDeviceViewHolder(AddNewDeviceViewHolder vh, int position) {
-         FloatingActionButton addbutton = (FloatingActionButton) items.get(position);
-         addbutton = vh.getAddButton();
+         //FloatingActionButton addbutton = (FloatingActionButton) items.get(position);
+         //addbutton = vh.getAddButton();
 
     }
 
