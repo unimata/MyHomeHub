@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="2dp">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/deviceNameTv"
@@ -12,6 +12,20 @@
         android:layout_height="31dp"
         android:gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:paddingStart="10dp"/>
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:text="Delete"/>
+
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Edit"/>
 
 </LinearLayout>

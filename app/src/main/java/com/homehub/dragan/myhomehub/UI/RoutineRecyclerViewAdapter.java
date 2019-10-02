@@ -27,7 +27,7 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        View v1 = inflater.inflate(R.layout.routine_viewholder, viewGroup, false);
+        View v1 = inflater.inflate(R.layout.routine_viewholder_relative, viewGroup, false);
         viewHolder = new RoutineViewHolder(v1);
 
         return viewHolder;

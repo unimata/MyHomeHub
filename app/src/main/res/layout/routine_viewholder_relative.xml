@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/deviceNameTv"
+        android:layout_width="100dp"
+        android:layout_height="31dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:paddingStart="10dp"/>
+
+    <TextView
+        android:id="@+id/activationTimeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/deviceNameTv"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textStyle="bold"
+        android:text="Upon ____,"/>
+
+    <TextView
+        android:id="@+id/activationActionTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/activationTimeTv"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textStyle="bold"
+        android:text=" do ____"/>
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/deviceNameTv"
+        android:layout_toRightOf="@id/editBtn"
+        android:text="Delete"/>
+
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/deviceNameTv"
+        android:text="Edit"/>
+
+</RelativeLayout>
