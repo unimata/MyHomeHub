@@ -1,25 +1,21 @@
 package com.homehub.dragan.myhomehub.Activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,18 +29,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.homehub.dragan.myhomehub.Classes.HomeHub;
+import com.homehub.dragan.myhomehub.Classes.model.ErrorMessage;
+import com.homehub.dragan.myhomehub.Classes.model.Group;
+import com.homehub.dragan.myhomehub.Classes.provider.DatabaseManager;
 import com.homehub.dragan.myhomehub.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -53,7 +51,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -77,7 +75,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static final String EXTRA_FULL_URI = "full_uri";
     public static final String EXTRA_PASSWORD = "password";
     public static final String EXTRA_LAST_REQUEST = "last_request";
-    private SharedPreferences mSharedPref;
+
+    public SharedPreferences mSharedPref;//dragans kryptonite
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -99,11 +98,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         //mEmailView = (AutoCompleteTextView) findViewById(R.id.input_email);
-        mIpAddressView = (EditText) findViewById(R.id.input_URL);
+        mIpAddressView = findViewById(R.id.input_URL);
 
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.input_password);
+        mPasswordView = findViewById(R.id.input_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -135,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.btn_login);
+        Button mEmailSignInButton = findViewById(R.id.btn_login);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,8 +150,72 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        if (mSharedPref == null) {
+            new SharedPreferenceLoadingTask().execute();
+        }
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+    }
+
+    private class SharedPreferenceLoadingTask extends AsyncTask<Void, Void, ErrorMessage> {
+
+        @Override
+        protected ErrorMessage doInBackground(Void... param) {
+            PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.preferences, false);
+            mSharedPref = getAppController().getSharedPref();
+
+
+            /*int ids[] = AppWidgetManager.getInstance(LoginActivity.this).getAppWidgetIds(new ComponentName(LoginActivity.this, EntityWidgetProvider.class));
+            if (ids.length > 0) {
+                ArrayList<String> appWidgetIds = new ArrayList<>();
+                for (int id : ids) {
+                    appWidgetIds.add(Integer.toString(id));
+                }
+
+                DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+                databaseManager.forceCreate();
+                databaseManager.housekeepWidgets(appWidgetIds);
+
+            }*/
+            //mBundle = getIntent().getExtras();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ErrorMessage errorMessage) {
+            if (errorMessage == null) {
+
+                if (mSharedPref.getString(EXTRA_IPADDRESS, null) != null) {
+
+                    DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+
+                    ArrayList<Group> groups = databaseManager.getGroups();
+//                    ArrayList<HomeAssistantServer> connections = databaseManager.getConnections();
+                    int dashboardCount = databaseManager.getDashboardCount();
+                    Log.d("YouQi", "dashboardCount: " + dashboardCount);
+//                    if (groups.size() != 0 && connections.size() != 0 && dashboardCount > 0) {
+//                        startMainActivity();
+//                        return;
+//                    }
+                }
+
+                //mLayoutMain.setVisibility(View.VISIBLE);
+
+                mIpAddressView.setText(mSharedPref.getString(EXTRA_FULL_URI, ""));
+                if (mIpAddressView.getText().toString().trim().length() != 0) {
+                    mPasswordView.requestFocus();
+                } else {
+                    mIpAddressView.requestFocus();
+                }
+                //showProgress(false, null);
+            } else {
+                //mProgressBar.setVisibility(View.GONE);
+                //m.setVisibility(View.GONE);
+                //mTextProgress.setText(errorMessage.message);
+            }
+
+            super.onPostExecute(errorMessage);
+        }
     }
 
     private void signIn(String email, String password){
@@ -259,7 +322,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        //mEmailView.setError(null);
+        mIpAddressView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
@@ -292,8 +355,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mIpAddressView.setError(getString(R.string.error_field_required));
             focusView = mIpAddressView;
             cancel = true;
-        } else if (!(baseURL.startsWith("http://") || baseURL.startsWith("https://"))) {
-            //mIpAddressView.setError(getString(R.string.error_invalid_baseurl));
+        } else if (!(baseURL.startsWith("http://") || baseURL.startsWith("192"))) {
+            mIpAddressView.setError("Error invalid url");
             focusView = mIpAddressView;
             cancel = true;
         }
@@ -301,11 +364,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
+
+            Log.d("Yo","login NOT triggered");
             focusView.requestFocus();
         } else {
             String host = Uri.parse(baseURL).getHost();
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            Log.d("Yo","login triggered "+host);
             mAuthTask = new UserLoginTask(baseURL, host, password);
             mAuthTask.execute((Void) null);
         }
@@ -400,7 +466,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
+
+                Log.d("Yo","SharedPref attempt");
                 SharedPreferences.Editor editor = mSharedPref.edit();
+
+                Log.d("Yo","SharedPref worked");
                 editor.putString(EXTRA_FULL_URI, mUri);
                 editor.putString(EXTRA_IPADDRESS, mIpAddress);
                 editor.putString(EXTRA_PASSWORD, mPassword);
@@ -408,15 +478,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 editor.putLong(EXTRA_LAST_REQUEST, System.currentTimeMillis()).apply();
                 editor.apply();
 
-                Toast bread;
-                if(HomeHub.getInstance().isConnected()){
-                    //CommonUtil.logLargeString("YouQi", "CONNECTED");
-                }else {
-                    //CommonUtil.logLargeString("YouQi", "NOT CONNECTED");
-                }
-
                 HomeHub.getInstance().isConnected();
-
+                Log.d("Yo"," holy s*** it worked");
 
 
 //                DatabaseManager databaseManager = DatabaseManager.getInstance(ConnectActivity.this);
@@ -427,13 +490,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    Log.d("YouQi", "Entity: " + entity.entityId);
 //                }
 
-                //Crashlytics.setUserIdentifier(settings.bootstrapResponse.profile.loginId);
 
             } catch (Exception e) {
-                Log.d("YouQi", "ERROR!");
+                Log.d("Yo", "ERROR!");
                 e.printStackTrace();
-                //Crashlytics.logException(e);
-                return false; //ErrorMessage(e.getMessage(), e.toString());
+                return false;
             }
             return true;
         }
@@ -442,12 +503,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
+                if (mSharedPref.getString(EXTRA_IPADDRESS, null) != null) {
+
+                    DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+
+                    ArrayList<Group> groups = databaseManager.getGroups();
+                    int dashboardCount = databaseManager.getDashboardCount();
+                    Log.d("Yo", "dashboardCount: " + dashboardCount);
+                }
                 finish();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
 
             } else {
+                Log.d("You","Nope");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

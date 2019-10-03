@@ -3,6 +3,7 @@
     package="com.homehub.dragan.myhomehub">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <application
+        android:name=".Activities.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Activities.HomeHubActivity"
+            android:label="Home Hub" />
         <activity
             android:name=".Activities.SignupActivity"
             android:label="Sign up for My Home Hub" />

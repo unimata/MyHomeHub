@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "433555115181",
-    "firebase_url": "https://myhomehub-87698.firebaseio.com",
-    "project_id": "myhomehub-87698",
-    "storage_bucket": "myhomehub-87698.appspot.com"
+    "project_number": "739109254924",
+    "firebase_url": "https://homeautomation-238318.firebaseio.com",
+    "project_id": "homeautomation-238318",
+    "storage_bucket": "homeautomation-238318.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:433555115181:android:db678702b7046bb6",
+        "mobilesdk_app_id": "1:739109254924:android:db678702b7046bb6",
         "android_client_info": {
           "package_name": "com.homehub.dragan.myhomehub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "433555115181-9l5ghe29oeedrn5iviodp12kot5evqko.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.homehub.dragan.myhomehub",
-            "certificate_hash": "5caa5482494e53528b9be75422a84967984dd754"
-          }
-        },
-        {
-          "client_id": "433555115181-bt8ep3rl9g1j087vf9g396j35fci1rj2.apps.googleusercontent.com",
+          "client_id": "739109254924-9itfcgs70v1jv07k4h35ba19j2mu4p1v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD3J1qghw5aGLLSXy4t3-JHp6Vx9XJ93Zo"
+          "current_key": "AIzaSyCVbMQFqWkRp7JRyq1MG_Tz7oMOs7Nqprk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "433555115181-bt8ep3rl9g1j087vf9g396j35fci1rj2.apps.googleusercontent.com",
+              "client_id": "739109254924-9itfcgs70v1jv07k4h35ba19j2mu4p1v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

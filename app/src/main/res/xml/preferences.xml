@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        android:title="Preference Category Settings">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/column_entries"
+            android:entryValues="@array/column_values"
+            android:key="num_columns"
+            android:summary="pref_column_entries_desc"
+            android:title="pref_column_entries"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sound_effect"
+            android:summary="pref_sound_effect_desc"
+            android:title="pref_sound_effect"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="websocket_mode"
+            android:summary="pref_websocket_mode_desc"
+            android:title="pref_websocket_mode"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="fingerprint_authentication"
+            android:title="auth_finger"
+            android:id="@+id/fingerprint_id"/>
+        <!--<CheckBoxPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="push_notification"-->
+        <!--android:summary="@string/pref_push_notification_desc"-->
+        <!--android:title="@string/pref_push_notification"/>-->
+
+        <!--<Preference-->
+        <!--android:dependency="push_notification"-->
+        <!--android:key="test_push_notification"-->
+        <!--android:summary="@string/pref_test_push_notification_desc"-->
+        <!--android:title="@string/pref_test_push_notification"/>-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        android:title="pref_category_application">
+        <Preference
+            android:key="version"
+            android:summary="0.0.0"
+            android:title="pref_app_version"/>
+
+        <Preference
+            android:key="build"
+            android:summary="Development"
+            android:title="pref_build"/>
+
+        <Preference
+            android:key="open_source"
+            android:title="pref_oss_license"/>
+
+        <Preference
+            android:key="changelog"
+            android:title="pref_changelog"/>
+
+        <!--<Preference-->
+        <!--android:key="bug_report"-->
+        <!--android:title="@string/pref_bug_report"/>-->
+        <Preference
+            android:key="recommend"
+            android:title="menu_recommend"/>
+
+        <Preference
+            android:key="about"
+            android:title="pref_about"/>
+    </PreferenceCategory>
+</PreferenceScreen>
