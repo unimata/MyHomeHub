@@ -1,12 +1,19 @@
 package com.homehub.dragan.myhomehub.Activities;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.R;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import com.homehub.dragan.myhomehub.Classes.RoutineList;
+
+import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
+import com.homehub.dragan.myhomehub.UI.Routine;
+
 import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +29,8 @@ public class ManageRoutinesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_routines);
 
         refreshRoutineList();
+
+
     }
 
     private ArrayList<Object> getRoutineList() {
@@ -30,7 +39,9 @@ public class ManageRoutinesActivity extends AppCompatActivity {
         return list;
     }
 
+
     public void refreshRoutineList(){
+
         rvRoutines = (RecyclerView) findViewById(R.id.rvRoutines);
         rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList()));
         rvRoutines.setLayoutManager(new LinearLayoutManager(this));

@@ -14,7 +14,11 @@ public class RoutineList {
     private RoutineList(){
 
         routines.add(new Routine("Bulb"));
+
         routines.add(new Routine("Bolbus"));
+
+
+        routines.add(true);//Keep this at the end always)
     }
 
     public static RoutineList getInstance(){

@@ -5,6 +5,9 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+
+import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +19,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +42,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.homehub.dragan.myhomehub.Classes.HomeHub;
+import com.homehub.dragan.myhomehub.Classes.model.ErrorMessage;
+import com.homehub.dragan.myhomehub.Classes.model.Group;
+import com.homehub.dragan.myhomehub.Classes.provider.DatabaseManager;
 import com.homehub.dragan.myhomehub.R;
 
 import java.util.ArrayList;
@@ -41,10 +54,11 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 
+
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -64,8 +78,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+
+    public static final String EXTRA_IPADDRESS = "ip_address";
+    public static final String EXTRA_FULL_URI = "full_uri";
+    public static final String EXTRA_PASSWORD = "password";
+    public static final String EXTRA_LAST_REQUEST = "last_request";
+
+    public SharedPreferences mSharedPref;//dragans kryptonite
+
     // UI references.
     private AutoCompleteTextView mEmailView;
+    private EditText mIpAddressView;
     private EditText mPasswordView;
     private FirebaseApp firebaseApp;
     private FirebaseAuth mAuth;
@@ -78,13 +101,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+        HomeHub.getInstance(); //create the HH websocket
 
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.input_email);
+        //mEmailView = (AutoCompleteTextView) findViewById(R.id.input_email);
+        mIpAddressView = findViewById(R.id.input_URL);
+
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.input_password);
+        mPasswordView = findViewById(R.id.input_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -97,7 +123,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         _loginButton = findViewById(R.id.btn_login);
-        _loginButton.setOnClickListener(new OnClickListener() {
+
+
+        _loginButton.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
@@ -106,7 +135,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         _signupButton = findViewById(R.id.link_signup);
-        _signupButton.setOnClickListener(new OnClickListener() {
+
+        _signupButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -116,7 +146,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.btn_login);
+        Button mEmailSignInButton = findViewById(R.id.btn_login);
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,8 +163,74 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+
+        if (mSharedPref == null) {
+            new SharedPreferenceLoadingTask().execute();
+        }
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+    }
+
+
+    private class SharedPreferenceLoadingTask extends AsyncTask<Void, Void, ErrorMessage> {
+
+        @Override
+        protected ErrorMessage doInBackground(Void... param) {
+            PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.preferences, false);
+            mSharedPref = getAppController().getSharedPref();
+
+
+            /*int ids[] = AppWidgetManager.getInstance(LoginActivity.this).getAppWidgetIds(new ComponentName(LoginActivity.this, EntityWidgetProvider.class));
+            if (ids.length > 0) {
+                ArrayList<String> appWidgetIds = new ArrayList<>();
+                for (int id : ids) {
+                    appWidgetIds.add(Integer.toString(id));
+                }
+
+                DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+                databaseManager.forceCreate();
+                databaseManager.housekeepWidgets(appWidgetIds);
+
+            }*/
+            //mBundle = getIntent().getExtras();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ErrorMessage errorMessage) {
+            if (errorMessage == null) {
+
+                if (mSharedPref.getString(EXTRA_IPADDRESS, null) != null) {
+
+                    DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+
+                    ArrayList<Group> groups = databaseManager.getGroups();
+//                    ArrayList<HomeAssistantServer> connections = databaseManager.getConnections();
+                    int dashboardCount = databaseManager.getDashboardCount();
+                    Log.d("YouQi", "dashboardCount: " + dashboardCount);
+//                    if (groups.size() != 0 && connections.size() != 0 && dashboardCount > 0) {
+//                        startMainActivity();
+//                        return;
+//                    }
+                }
+
+                //mLayoutMain.setVisibility(View.VISIBLE);
+
+                mIpAddressView.setText(mSharedPref.getString(EXTRA_FULL_URI, ""));
+                if (mIpAddressView.getText().toString().trim().length() != 0) {
+                    mPasswordView.requestFocus();
+                } else {
+                    mIpAddressView.requestFocus();
+                }
+                //showProgress(false, null);
+            } else {
+                //mProgressBar.setVisibility(View.GONE);
+                //m.setVisibility(View.GONE);
+                //mTextProgress.setText(errorMessage.message);
+            }
+
+            super.onPostExecute(errorMessage);
+        }
     }
 
     private void signIn(String email, String password){
@@ -202,7 +299,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new OnClickListener() {
+
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
@@ -240,11 +339,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+
+        mIpAddressView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        //String email = mEmailView.getText().toString();
+        String baseURL = mIpAddressView.getText().toString();
+
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -258,7 +360,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        /**if (TextUtils.isEmpty(email)) {
+
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
@@ -266,16 +369,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+
+         }**/
+        // Check for a valid email address2.
+        if (TextUtils.isEmpty(baseURL)) {
+            mIpAddressView.setError(getString(R.string.error_field_required));
+            focusView = mIpAddressView;
+            cancel = true;
+        } else if (!(baseURL.startsWith("http://") || baseURL.startsWith("192"))) {
+            mIpAddressView.setError("Error invalid url");
+            focusView = mIpAddressView;
+            cancel = true;
         }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
+
+            Log.d("Yo","login NOT triggered");
             focusView.requestFocus();
         } else {
+            String host = Uri.parse(baseURL).getHost();
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mAuthTask = new UserLoginTask(email, password);
+            Log.d("Yo","login triggered "+host);
+            mAuthTask = new UserLoginTask(baseURL, host, password);
             mAuthTask.execute((Void) null);
         }
     }
@@ -317,7 +435,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cursor.moveToNext();
         }
 
-        addEmailsToAutoComplete(emails);
+
+        //addEmailsToAutoComplete(emails);
+
     }
 
     @Override
@@ -331,7 +451,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+
+        //mEmailView.setAdapter(adapter);
+
     }
 
 
@@ -351,34 +473,55 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        //private final String mEmail;
+        private final String mUri;
+        private final String mIpAddress;
+        private final String mPassword;
+        private final String mBearerHeader;
+
+        UserLoginTask(String uri, String ipAddress, String password) {
+            //mEmail = email;
+            mUri = uri;
+            mIpAddress = ipAddress;
             mPassword = password;
+            mBearerHeader = "Bearer " + password;
+
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+
+                Log.d("Yo","SharedPref attempt");
+                SharedPreferences.Editor editor = mSharedPref.edit();
+
+                Log.d("Yo","SharedPref worked");
+                editor.putString(EXTRA_FULL_URI, mUri);
+                editor.putString(EXTRA_IPADDRESS, mIpAddress);
+                editor.putString(EXTRA_PASSWORD, mPassword);
+                editor.putInt("connectionIndex", 0);
+                editor.putLong(EXTRA_LAST_REQUEST, System.currentTimeMillis()).apply();
+                editor.apply();
+
+                HomeHub.getInstance().isConnected();
+                Log.d("Yo"," holy s*** it worked");
+
+
+//                DatabaseManager databaseManager = DatabaseManager.getInstance(ConnectActivity.this);
+//                databaseManager.updateTables(bootstrapResponse);
+//                databaseManager.addConnection(new HomeAssistantServer(mUri, mPassword));
+//                ArrayList<Entity> entities = databaseManager.getEntities();
+//                for (Entity entity : entities) {
+//                    Log.d("YouQi", "Entity: " + entity.entityId);
+//                }
+
+
+            } catch (Exception e) {
+                Log.d("Yo", "ERROR!");
+                e.printStackTrace();
                 return false;
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
             return true;
         }
 
@@ -386,11 +529,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
+                if (mSharedPref.getString(EXTRA_IPADDRESS, null) != null) {
+
+                    DatabaseManager databaseManager = DatabaseManager.getInstance(LoginActivity.this);
+
+                    ArrayList<Group> groups = databaseManager.getGroups();
+                    int dashboardCount = databaseManager.getDashboardCount();
+                    Log.d("Yo", "dashboardCount: " + dashboardCount);
+                }
                 finish();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
 
             } else {
+                Log.d("You","Nope");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

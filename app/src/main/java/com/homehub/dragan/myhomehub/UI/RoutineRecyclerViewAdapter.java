@@ -28,6 +28,7 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
         View v1 = inflater.inflate(R.layout.routine_viewholder_relative, viewGroup, false);
+
         viewHolder = new RoutineViewHolder(v1);
 
         return viewHolder;
@@ -42,6 +43,7 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private void configureRoutineViewHolder(RoutineViewHolder rvh1, int position) {
         Routine routine = (Routine) items.get(position);
         rvh1.getDeviceName().setText(routine.getDeviceName());
+
     }
 
 }

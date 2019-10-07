@@ -3,6 +3,9 @@ package com.homehub.dragan.myhomehub.Classes;
 import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
 import com.homehub.dragan.myhomehub.UI.SwitchBasedControl;
 
+
+import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 public final class DeviceList {

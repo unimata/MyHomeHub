@@ -7,7 +7,6 @@ public class Routine {
 
         setDeviceName(deviceName);
     }
-
     public String getDeviceName() { return DeviceName; }
 
     public void setDeviceName(String deviceName) {
