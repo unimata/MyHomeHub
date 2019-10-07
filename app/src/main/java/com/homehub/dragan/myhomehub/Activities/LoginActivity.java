@@ -5,13 +5,20 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+
 import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -71,6 +78,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
      */
     private UserLoginTask mAuthTask = null;
 
+
     public static final String EXTRA_IPADDRESS = "ip_address";
     public static final String EXTRA_FULL_URI = "full_uri";
     public static final String EXTRA_PASSWORD = "password";
@@ -115,7 +123,10 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
         });
 
         _loginButton = findViewById(R.id.btn_login);
+
+
         _loginButton.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
@@ -124,6 +135,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
         });
 
         _signupButton = findViewById(R.id.link_signup);
+
         _signupButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -135,6 +147,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
         });
 
         Button mEmailSignInButton = findViewById(R.id.btn_login);
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,12 +163,14 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+
         if (mSharedPref == null) {
             new SharedPreferenceLoadingTask().execute();
         }
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
     }
+
 
     private class SharedPreferenceLoadingTask extends AsyncTask<Void, Void, ErrorMessage> {
 
@@ -284,7 +299,9 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+
                     .setAction(android.R.string.ok, new View.OnClickListener() {
+
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
@@ -322,12 +339,14 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
         }
 
         // Reset errors.
+
         mIpAddressView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
         //String email = mEmailView.getText().toString();
         String baseURL = mIpAddressView.getText().toString();
+
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -342,6 +361,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
 
         // Check for a valid email address.
         /**if (TextUtils.isEmpty(email)) {
+
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
@@ -349,6 +369,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+
          }**/
         // Check for a valid email address2.
         if (TextUtils.isEmpty(baseURL)) {
@@ -414,7 +435,9 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
             cursor.moveToNext();
         }
 
+
         //addEmailsToAutoComplete(emails);
+
     }
 
     @Override
@@ -428,7 +451,9 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
+
         //mEmailView.setAdapter(adapter);
+
     }
 
 
@@ -447,6 +472,7 @@ public class LoginActivity extends HomeHubActivity implements LoaderCallbacks<Cu
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+
 
         //private final String mEmail;
         private final String mUri;

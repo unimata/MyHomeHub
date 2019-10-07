@@ -27,7 +27,8 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        View v1 = inflater.inflate(R.layout.layout_routine, viewGroup, false);
+        View v1 = inflater.inflate(R.layout.routine_viewholder_relative, viewGroup, false);
+
         viewHolder = new RoutineViewHolder(v1);
 
         return viewHolder;
@@ -35,6 +36,13 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        RoutineViewHolder rvh1 = (RoutineViewHolder) viewHolder;
+        configureRoutineViewHolder(rvh1, i);
+    }
+
+    private void configureRoutineViewHolder(RoutineViewHolder rvh1, int position) {
+        Routine routine = (Routine) items.get(position);
+        rvh1.getDeviceName().setText(routine.getDeviceName());
 
     }
 

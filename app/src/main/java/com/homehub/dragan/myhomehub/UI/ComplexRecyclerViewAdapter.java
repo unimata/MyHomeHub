@@ -116,6 +116,7 @@ public class ComplexRecyclerViewAdapter
             case SLIDER:
                 SliderControlViewHolder vh4 = (SliderControlViewHolder) viewHolder;
                 //configureSliderViewHolder(vh4, position);
+
                 break;
             default:
                 //skip it
@@ -128,6 +129,7 @@ public class ComplexRecyclerViewAdapter
     private void configureAddNewDeviceViewHolder(AddNewDeviceViewHolder vh, int position) {
          FloatingActionButton addbutton = (FloatingActionButton) items.get(position);
          addbutton = vh.getAddButton();
+
 
     }
 

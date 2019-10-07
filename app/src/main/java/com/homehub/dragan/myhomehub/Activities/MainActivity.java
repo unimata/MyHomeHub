@@ -17,11 +17,13 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.homehub.dragan.myhomehub.UI.ComplexRecyclerViewAdapter;
 import com.homehub.dragan.myhomehub.R;
 import com.homehub.dragan.myhomehub.Classes.DeviceList;
 import com.homehub.dragan.myhomehub.UI.SliderBasedControl;
 import com.homehub.dragan.myhomehub.UI.SwitchBasedControl;
+
 
 import java.util.ArrayList;
 

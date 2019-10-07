@@ -3,6 +3,7 @@ package com.homehub.dragan.myhomehub;
 import com.stanfy.gsonxml.GsonXml;
 import com.stanfy.gsonxml.GsonXmlBuilder;
 import com.stanfy.gsonxml.XmlParserCreator;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
