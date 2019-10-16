@@ -7,13 +7,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.Fragments.AccountMenuFragment;
 
 import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
+
+import java.util.ArrayList;
 
 public class AutomationActivity extends AppCompatActivity {
 
@@ -43,10 +49,17 @@ public class AutomationActivity extends AppCompatActivity {
         }
     };
 
+    public ArrayList<Object> items = RoutineList.getInstance().getRoutines();
+    RecyclerView rvRoutines;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_automation);
+
+        //RecyclerView rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
+
+        refreshRoutineList();
 
         Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
         Button btnManageRoutines = (Button) findViewById(R.id.btnManageRoutines);
@@ -72,5 +85,18 @@ public class AutomationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private ArrayList<Object> getRoutineList() {
+        ArrayList<Object> list = items;
+        //Log.d("debuggin", list.toString());
+        return list;
+    }
+
+    public void refreshRoutineList(){
+
+        rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
+        rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList()));
+        rvRoutines.setLayoutManager(new LinearLayoutManager(this));
     }
 }

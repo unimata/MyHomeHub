@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="5dp"
+    android:background="@drawable/outline">
 
     <TextView
         android:id="@+id/deviceNameTv"
