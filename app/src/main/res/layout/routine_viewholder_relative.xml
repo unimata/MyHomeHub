@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="5dp"
     android:background="@drawable/outline">
@@ -10,34 +11,40 @@
     <TextView
         android:id="@+id/deviceNameTv"
         android:layout_width="100dp"
-        android:layout_height="31dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textStyle="bold"
+        android:text="Bulb"
         android:layout_margin="10dp"
         android:paddingStart="10dp"/>
 
     <TextView
-        android:id="@+id/activationTimeTv"
+        android:id="@+id/activatorTv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/deviceNameTv"
-        android:layout_margin="10dp"
         android:gravity="center_vertical"
+        android:text="Upon ____,"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textStyle="bold"
-        android:text="Upon ____,"/>
+        app:layout_constraintTop_toTopOf="@+id/deviceNameTv" />
 
     <TextView
-        android:id="@+id/activationActionTv"
+        android:id="@+id/actionTv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/activationTimeTv"
+        android:layout_height="31dp"
+        android:layout_toRightOf="@id/activatorTv"
         android:layout_margin="10dp"
         android:gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textStyle="bold"
-        android:text=" do ____"/>
+        android:text=" do ____"
+        app:layout_constraintTop_toTopOf="@+id/deviceNameTv"/>
 
     <Button
         android:id="@+id/deleteBtn"

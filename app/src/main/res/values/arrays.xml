@@ -33,10 +33,4 @@
         <item>sorted_name</item>
         <item>sorted_group</item>
     </string-array>
-
-    <string-array name="DummyDeviceRegistrations">
-        <item>Philips Hue Smart Bulb (DUMMY)</item>
-        <item>Google Home (DUMMY)</item>
-        <item>Alexa (DUMMY)</item>
-    </string-array>
 </resources>

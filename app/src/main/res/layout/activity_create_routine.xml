@@ -7,11 +7,81 @@
     tools:context=".Activities.CreateRoutineActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tvAutomationRoutines"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ooeheheh hello"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold"
-        android:padding="10dp"/>
+        android:layout_marginStart="10dp"
+        android:paddingTop="20dp"
+        android:text="New Routine"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigation" />
+
+    <TextView
+        android:id="@+id/tvDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="10dp"
+        android:text="Device:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
+
+    <Spinner
+        android:id="@+id/sprDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvDevice"
+        app:layout_constraintTop_toTopOf="@id/tvDevice" />
+
+    <TextView
+        android:id="@+id/tvAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="10dp"
+        android:text="Action:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDevice" />
+
+    <Spinner
+        android:id="@+id/sprActions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvAction"
+        app:layout_constraintTop_toTopOf="@id/tvAction" />
+
+    <TextView
+        android:id="@+id/tvActivator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="10dp"
+        android:text="Activator:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAction" />
+
+    <Spinner
+        android:id="@+id/sprActivator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvActivator"
+        app:layout_constraintTop_toTopOf="@id/tvActivator" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:layout_marginTop="12dp"
+        android:text="Create Routine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvActivator" />
 
 </android.support.constraint.ConstraintLayout>
