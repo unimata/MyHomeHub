@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CreateRoutineActivity" />
+        <activity android:name=".Activities.CreateRoutineActivity"></activity>
+        <activity android:name=".Activities.DeviceRegWebActivity"></activity>
+        <activity android:name=".Activities.AddDeviceRegActivity" />
         <activity android:name=".Activities.ManageRoutinesActivity" />
         <activity
             android:name=".Activities.LoginActivity"
