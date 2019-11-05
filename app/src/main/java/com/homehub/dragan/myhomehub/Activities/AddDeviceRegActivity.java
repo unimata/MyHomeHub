@@ -4,10 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.homehub.dragan.myhomehub.R;
@@ -25,7 +24,7 @@ public class AddDeviceRegActivity extends AppCompatActivity {
 
         //show action bar
         assert getSupportActionBar() != null;   //null check
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
         //set up the back and forward buttons
         btnContinueReg = findViewById(R.id.btnContinueReg);

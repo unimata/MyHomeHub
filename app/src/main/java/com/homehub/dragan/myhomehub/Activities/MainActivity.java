@@ -275,24 +275,16 @@ public class MainActivity extends HomeHubActivity implements
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 boolean isSelected = false;
-                Intent i;
                 switch (item.getItemId()) {
-                    case R.id.navigation_dashboard:
+                    case R.id.lblEdit:
                         //showSettings();
+                        Toast.makeText(MainActivity.this, "TODO MAKE THIS DO STUFF", Toast.LENGTH_SHORT).show();
                         mDrawerLayout.closeDrawers();
                         break;
 
-                    case R.id.navigation_automation:
-                        //showSwitch();
-                        mDrawerLayout.closeDrawers();
-                        i = new Intent(MainActivity.this, AutomationActivity.class);
-                        startActivity(i);
-                        break;
-
-                    case R.id.navigation_account:
-                        mDrawerLayout.closeDrawers();
-                        i = new Intent(MainActivity.this, AccountActivity.class);
-                        startActivity(i);
+                    case R.id.lblLogout:
+                        Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+                        logOut();
                         break;
 
                     default:

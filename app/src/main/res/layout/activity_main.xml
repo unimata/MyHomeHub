@@ -99,7 +99,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_main"
         app:itemBackground="@drawable/login_background"
-        app:menu="@menu/navigation">
+        app:menu="@menu/logout">
 
         <TextView
             android:id="@+id/version_text"

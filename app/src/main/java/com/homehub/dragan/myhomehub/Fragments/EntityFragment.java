@@ -227,7 +227,7 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSafeObserver.dispose();
+        //mSafeObserver.dispose();
     }
 
     private void refreshPreferenceConfigs() {
