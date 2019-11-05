@@ -29,18 +29,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/navigation" />
 
+    <TextView
+        android:id="@+id/tvNoRoutines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="No automation routines created"
+        android:padding="1dp"
+        android:background="@drawable/outline"
+        app:layout_constraintEnd_toEndOf="@id/btnManageRoutines"
+        app:layout_constraintStart_toStartOf="@+id/tvAutomationRoutines"
+        app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAutomationRoutines"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:padding="1dp"
         android:background="@drawable/outline"
         app:layout_constraintBottom_toTopOf="@+id/btnCreateRoutine"
         app:layout_constraintEnd_toEndOf="@id/btnManageRoutines"
         app:layout_constraintStart_toStartOf="@+id/tvAutomationRoutines"
-        app:layout_constraintTop_toBottomOf="@+id/btnManageRoutines" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
 
     <Button
         android:id="@+id/btnCreateRoutine"
@@ -60,6 +73,7 @@
         android:layout_marginRight="12dp"
         android:padding="3dp"
         android:text="Manage"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/navigation" />
 </android.support.constraint.ConstraintLayout>

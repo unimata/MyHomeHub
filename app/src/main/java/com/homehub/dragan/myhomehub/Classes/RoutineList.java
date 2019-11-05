@@ -15,8 +15,8 @@ public class RoutineList {
 
         setRoutines(routines);
 
-        routines.add(new Routine("Bulb", "turn on", "sunset"));
-        routines.add(new Routine("Bolbus","go away", "high noon"));
+        //routines.add(new Routine("Bulb", "turn on", "sunset"));
+        //routines.add(new Routine("Bolbus","go away", "high noon"));
     }
 
     public static RoutineList getInstance(){ return list; }

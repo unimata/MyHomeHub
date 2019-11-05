@@ -22,6 +22,8 @@ import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class AutomationActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -98,7 +100,12 @@ public class AutomationActivity extends AppCompatActivity {
     public void refreshRoutineList(){
 
         rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
-        rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList()));
-        rvRoutines.setLayoutManager(new LinearLayoutManager(this));
+        if (RoutineList.getInstance().routines.isEmpty()) {
+            rvRoutines.setVisibility(View.INVISIBLE);
+        } else {
+            rvRoutines.setVisibility(View.VISIBLE);
+            rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList()));
+            rvRoutines.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 }

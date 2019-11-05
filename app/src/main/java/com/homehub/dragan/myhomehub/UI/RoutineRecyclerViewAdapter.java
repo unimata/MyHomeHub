@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.R;
 
 import java.util.List;
@@ -36,9 +37,18 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         RoutineViewHolder rvh1 = (RoutineViewHolder) viewHolder;
         configureRoutineViewHolder(rvh1, i);
+        rvh1.btnDelete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Object theRemovedItem = RoutineList.getInstance().routines.get(i);
+                // remove your item from data base
+                RoutineList.getInstance().routines.remove(i);  // remove the item from list
+                notifyItemRemoved(i); // notify the adapter about the removed item
+                //TODO: find a way to make RecyclerView invisible when list is emptied
+            }
+        });
     }
 
     private void configureRoutineViewHolder(RoutineViewHolder rvh1, int position) {
