@@ -20,7 +20,7 @@ import com.homehub.dragan.myhomehub.Classes.model.Widget;
 import java.util.ArrayList;
 
 public class EntityContentProvider extends ContentProvider {
-    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider.EntityContentProvider";
+    public static final String AUTHORITY = "com.homehub.dragan.myhomehub.Classes.provider.EntityContentProvider";
     private static final String TABLE_NAME = "entities";
 
     private DatabaseManager mSqliteOpenHelper;
@@ -28,15 +28,13 @@ public class EntityContentProvider extends ContentProvider {
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        //sUriMatcher.addURI(AUTHORITY, TABLE_NAME + "/offset/" + "#", TABLE_ITEMS);
         sUriMatcher.addURI(AUTHORITY, "entities", 1);
         sUriMatcher.addURI(AUTHORITY, "dashboard", 2);
     }
 
     public static Uri getUrl() {
         return Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-        //return "content://com.payano.homeassistant.provider.EntityContentProvider/";
-        //return Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME + "/offset/" + limit);
+        //return Uri.parse("content://com.homehub.dragan.myhomehub.Classes.provider.EntityContentProvider/");
     }
 
     @Override
@@ -55,37 +53,10 @@ public class EntityContentProvider extends ContentProvider {
         String offset;
 
         Log.d("YouQi", "query URI Matcher: " + sUriMatcher.match(uri));
-//        switch (sUriMatcher.match(uri)) {
-//            case TABLE_ITEMS: {
-//                sqb.setTables(TABLE_NAME);
-//                offset = uri.getLastPathSegment();
-//                break;
-//            }
-//
-//            default:
-//                throw new IllegalArgumentException("uri not recognized!");
-//        }
-//
-//        int intOffset = Integer.parseInt(offset);
-//
-//        String limitArg = intOffset + ", " + 30;
-//        Log.d(TAG, "query: " + limitArg);
-//        c = sqb.query(db, projection, selection, selectionArgs, null, null, sortOrder, limitArg);
 
-        //https://stackoverflow.com/questions/4957009/how-do-i-join-two-sqlite-tables-in-my-android-application
         String query = "SELECT *, -1 AS DISPLAY_ORDER FROM entities";
         c = db.rawQuery(query, null);
-        //Log.d("YouQi", "sort: " + sortOrder);
-
-        //c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
         c.setNotificationUri(getContext().getContentResolver(), uri);
-
-        //TODO: REFERENCE
-        //SQLiteDatabase db = this.getReadableDatabase();
-        //String[] columnsToReturn = {"ISO_CODE", "COUNTRY_NAME", "API_KEY"};
-        //String selection = "UPPER(ISO_CODE) = ?";
-        //String[] selectionArgs = {isoCode.trim()}; // matched to "?" in selection
-        //Cursor cursor = db.query("nationalities", columnsToReturn, selection, selectionArgs, null, null, null);
 
         return c;
     }
@@ -98,12 +69,6 @@ public class EntityContentProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         String table = "";
-//        switch (sUriMatcher.match(uri)) {
-//            case TABLE_ITEMS: {
-//                table = TABLE_NAME; //TableItems.NAME;
-//                break;
-//            }
-//        }
 
         long result = mSqliteOpenHelper.getWritableDatabase().insertWithOnConflict(table, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
@@ -117,7 +82,6 @@ public class EntityContentProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        Log.d("YouQi", "Bulk Insert Called");
         SQLiteDatabase db = mSqliteOpenHelper.getWritableDatabase();
         db.beginTransaction();
 
@@ -147,7 +111,6 @@ public class EntityContentProvider extends ContentProvider {
         if (context != null) context.getContentResolver().notifyChange(callbackUri, null);
 
         return inserted;
-        //return super.bulkInsert(uri, values);
     }
 
     @Override
@@ -173,19 +136,11 @@ public class EntityContentProvider extends ContentProvider {
         for (int widgetId : widgetIds) {
             Log.d("YouQi", "Updating Widget: " + widgetId);
             Widget widget = Widget.getInstance(entity, widgetId);
-            //EntityWidgetProvider.updateEntityWidget(getContext(), widget);
         }
 
         Uri newUri = DummyContentProvider.getUrl(entityId);
-        Log.d("YouQi", "inform URI: " + newUri);
 
         getContext().getContentResolver().notifyChange(newUri, null);
-        //getContext().getContentResolver().notifyChange(Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME + "/"), null);
-////        String limitArg = intOffset + ", " + 30;
-////        Log.d(TAG, "query: " + limitArg);
-////        c = sqb.query(db, projection, selection, selectionArgs, null, null, sortOrder, limitArg);
-//
-
 
         return -1;
     }

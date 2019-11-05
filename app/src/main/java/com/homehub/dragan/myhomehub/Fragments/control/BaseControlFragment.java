@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub.Classes.fragment.control;
+package com.homehub.dragan.myhomehub.Fragments.control;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

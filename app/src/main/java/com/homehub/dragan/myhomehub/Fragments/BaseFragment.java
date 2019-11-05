@@ -1,4 +1,4 @@
-package com.homehub.dragan.myhomehub.Classes.fragment;
+package com.homehub.dragan.myhomehub.Fragments;
 
 import android.app.Activity;
 import android.app.Application;

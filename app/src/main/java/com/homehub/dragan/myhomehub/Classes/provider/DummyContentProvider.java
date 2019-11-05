@@ -11,7 +11,7 @@ import android.util.Log;
 import com.homehub.dragan.myhomehub.BuildConfig;
 
 public class DummyContentProvider extends ContentProvider {
-    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider.DummyContentProvider";
+    public static final String AUTHORITY = "com.homehub.dragan.myhomehub.Classes.provider.DummyContentProvider";
     private static final String TABLE_NAME = "entities";
 
     private static final UriMatcher sUriMatcher;
@@ -37,7 +37,7 @@ public class DummyContentProvider extends ContentProvider {
 
     @Override
     synchronized public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Log.d("YouQi", "query uri: " + uri.toString());
+        Log.d("Yo", "query uri: " + uri.toString());
         return null;
     }
 

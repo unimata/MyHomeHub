@@ -10,7 +10,7 @@ import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 
-public class HomeAssistantWebSocket {
+public class HomeHubWebSocket {
     public static int identifier = 1;
 
     public static int getNextIdentifier() {
@@ -18,8 +18,9 @@ public class HomeAssistantWebSocket {
     }
 
     public static Future<WebSocket> getInstance() {
-        final String uri = "ws://192.168.2.50:8123/api/websocket";
-        return AsyncHttpClient.getDefaultInstance().websocket(uri, null, new AsyncHttpClient.WebSocketConnectCallback() {
+        final String uri = "ws://192.168.0.169:8123/api/websocket";
+        return AsyncHttpClient.getDefaultInstance().websocket(uri, null,
+                new AsyncHttpClient.WebSocketConnectCallback() {
 
             @Override
             public void onCompleted(Exception ex, final WebSocket webSocket) {

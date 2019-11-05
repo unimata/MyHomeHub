@@ -1,11 +1,5 @@
 package com.homehub.dragan.myhomehub.Classes;
 
-import com.homehub.dragan.myhomehub.Classes.ConnectionHandler;
-import com.homehub.dragan.myhomehub.Classes.HAConnectionEvent;
-import com.homehub.dragan.myhomehub.Classes.HAConnectionSubscriber;
-import com.google.gson.JsonObject;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,9 +58,8 @@ public class HomeHub implements HAConnectionSubscriber, Runnable {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e){
-                // e.printStackTrace();
-                // System.out.println("AHAAH");
-            }finally {
+            }
+            finally {
                 checkMessages();
             }
         }

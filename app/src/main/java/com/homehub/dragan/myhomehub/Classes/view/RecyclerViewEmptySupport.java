@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.GridLayoutAnimationController;
 
-/**
- * https://stackoverflow.com/a/30415582/512998
- */
 public class RecyclerViewEmptySupport extends RecyclerView {
     private View emptyView;
 
@@ -59,7 +56,6 @@ public class RecyclerViewEmptySupport extends RecyclerView {
         this.emptyView = emptyView;
     }
 
-    //https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-2-grids-688829b1d29b
     @Override
     protected void attachLayoutAnimationParameters(View child, ViewGroup.LayoutParams params, int index, int count) {
         final LayoutManager layoutManager = getLayoutManager();
