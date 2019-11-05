@@ -1,8 +1,8 @@
 package com.homehub.dragan.myhomehub.Activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.homehub.dragan.myhomehub.Fragments.AppSettingsFragment;
 import com.homehub.dragan.myhomehub.Fragments.DeviceRegistrationsFragment;
@@ -19,7 +19,7 @@ public class AccountSubActivity extends AppCompatActivity {
 
         //show action bar
         assert getSupportActionBar() != null;   //null check
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
         //show acc_settings
         setContentView(R.layout.activity_acc_settings);

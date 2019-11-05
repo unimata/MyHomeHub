@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/cardview_light_background"
+    android:clipToPadding="false">
+
+    <com.homehub.dragan.myhomehub.Classes.view.RecyclerViewEmptySupport
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="2dp"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        tools:listitem="@layout/title_entity"/>
+
+    <LinearLayout
+        android:id="@+id/progressbar_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:paddingBottom="40dp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="Empty"
+            android:src="@drawable/googleg_disabled_color_18"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Empty_dashboard"
+            android:textSize="16sp"
+            android:tint="@color/common_google_signin_btn_tint"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="?listPreferredItemHeight"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:onClick="showEdit"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Edit_dashboard"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"/>
+    </LinearLayout>
+
+</FrameLayout>

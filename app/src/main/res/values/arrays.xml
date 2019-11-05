@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="column_entries">
+        <item>option_auto</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="column_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="DummyDeviceRegistrations">
+        <item>Philips Hue Smart Bulb (DUMMY)</item>
+        <item>Google Home (DUMMY)</item>
+        <item>Alexa (DUMMY)</item>
+    </string-array>
+
+    <string-array name="sorted_descriptions">
+        <item>sorted_order</item>
+        <item>sorted_name</item>
+        <item>sorted_group</item>
+    </string-array>
+
+    <string-array name="fake_devices">
+        <item>--- Choose a device ---</item>
+        <item>LiFX LED Light</item>
+        <item>Phillips Hue</item>
+        <item>WeMo Smart Outlet</item>
+    </string-array>
+    <string-array name="fake_actions">
+        <item>--- Choose an action ---</item>
+        <item>Turn on</item>
+        <item>Turn off</item>
+    </string-array>
+    <string-array name="fake_activators">
+        <item>--- Choose an activator ---</item>
+        <item>Sunrise</item>
+        <item>Sunset</item>
+    </string-array>
+</resources>

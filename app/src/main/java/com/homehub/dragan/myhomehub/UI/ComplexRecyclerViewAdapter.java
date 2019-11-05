@@ -11,7 +11,8 @@ import com.homehub.dragan.myhomehub.R;
 
 import java.util.List;
 
-public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ComplexRecyclerViewAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // The items to display in your RecyclerView
     private List<Object> items;
@@ -102,19 +103,20 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         switch (viewHolder.getItemViewType()) {
             case NEW:
                 AddNewDeviceViewHolder vh1 = (AddNewDeviceViewHolder) viewHolder;
-                configureAddNewDeviceViewHolder(vh1, position);
+                //configureAddNewDeviceViewHolder(vh1, position);
                 break;
             case IMAGE:
                 ViewHolder2 vh2 = (ViewHolder2) viewHolder;
-                configureViewHolder2(vh2);
+                //configureViewHolder2(vh2);
                 break;
             case SWITCH:
                 SwitchControlViewHolder vh3 = (SwitchControlViewHolder) viewHolder;
-                configureSwitchViewHolder(vh3, position);
+                //configureSwitchViewHolder(vh3, position);
                 break;
             case SLIDER:
                 SliderControlViewHolder vh4 = (SliderControlViewHolder) viewHolder;
-                configureSliderViewHolder(vh4, position);
+                //configureSliderViewHolder(vh4, position);
+
                 break;
             default:
                 //skip it
@@ -127,6 +129,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private void configureAddNewDeviceViewHolder(AddNewDeviceViewHolder vh, int position) {
          FloatingActionButton addbutton = (FloatingActionButton) items.get(position);
          addbutton = vh.getAddButton();
+
 
     }
 

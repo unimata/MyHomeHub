@@ -2,33 +2,49 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.homehub.dragan.myhomehub">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
+        android:name=".Activities.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
+
+        <activity android:name=".Activities.CreateRoutineActivity"></activity>
+        <activity android:name=".Activities.DeviceRegWebActivity"></activity>
+        <activity android:name=".Activities.AddDeviceRegActivity" />
+        <activity android:name=".Activities.ManageRoutinesActivity" />
+
         <activity
             android:name=".Activities.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="My Home Hub"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.WidgetConfigActivity" />
+        <activity android:name=".Activities.EntityActivity" />
+        <activity android:name=".Activities.CreateRoutineActivity" />
+        <activity android:name=".Activities.ManageRoutinesActivity" />
+        <activity
+            android:name=".Activities.HomeHubActivity"
+            android:label="My Home Hub" />
+        <activity
+            android:name=".Activities.BackgroundActivity"
+            android:label="My Home Hub"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".Activities.SignupActivity"
-            android:label="Sign up for My Home Hub"></activity>
+            android:label="Sign up for My Home Hub" />
         <activity android:name=".Activities.AccountSubActivity" />
         <activity
             android:name=".Activities.AddDeviceActivity"
             android:label="@string/title_activity_add_device"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.CreateRoutineActivity" />
         <activity
             android:name=".Activities.AccountActivity"
             android:label="@string/title_activity_account" />
@@ -37,13 +53,38 @@
             android:label="@string/title_activity_automation" />
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <provider
+            android:name=".Classes.provider.EntityContentProvider"
+            android:authorities="com.homehub.dragan.myhomehub.Classes.provider.EntityContentProvider"
+            android:exported="false" />
+        <provider
+            android:name=".Classes.provider.DummyContentProvider"
+            android:authorities="com.homehub.dragan.myhomehub.Classes.provider.DummyContentProvider"
+            android:exported="false" />
+
+        <receiver android:name="Classes.provider.EntityWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-        </activity>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/entity_widget_info" />
+        </receiver>
+
+        <service android:name=".Classes.provider.DataSyncService" />
+            android:label="@string/app_name" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

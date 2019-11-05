@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "739109254924",
+    "firebase_url": "https://homeautomation-238318.firebaseio.com",
+    "project_id": "homeautomation-238318",
+    "storage_bucket": "homeautomation-238318.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739109254924:android:db678702b7046bb6",
+        "android_client_info": {
+          "package_name": "com.homehub.dragan.myhomehub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739109254924-9itfcgs70v1jv07k4h35ba19j2mu4p1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVbMQFqWkRp7JRyq1MG_Tz7oMOs7Nqprk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739109254924-9itfcgs70v1jv07k4h35ba19j2mu4p1v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
