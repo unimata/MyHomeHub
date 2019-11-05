@@ -44,7 +44,8 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private void configureRoutineViewHolder(RoutineViewHolder rvh1, int position) {
         Routine routine = (Routine) items.get(position);
         rvh1.getDeviceName().setText(routine.getDeviceName());
-
+        rvh1.getActionTv().setText(routine.getAction());
+        rvh1.getActivatorTv().setText("At " + routine.getActivator() + ", ");
     }
 
 }

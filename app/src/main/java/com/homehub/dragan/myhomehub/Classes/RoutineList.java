@@ -9,23 +9,19 @@ public class RoutineList {
     //most of these methods were copied from DeviceList class and altered
     private static final RoutineList list = new RoutineList();
 
-    private ArrayList<Object> routines = new ArrayList<Object>();
+    public ArrayList<Object> routines = new ArrayList<Object>();
 
-    private RoutineList(){
+    public RoutineList(){
 
-        routines.add(new Routine("Bulb"));
+        setRoutines(routines);
 
-        routines.add(new Routine("Bolbus"));
-
-
-        //routines.add(true);//Keep this at the end always)
+        routines.add(new Routine("Bulb", "turn on", "sunset"));
+        routines.add(new Routine("Bolbus","go away", "high noon"));
     }
 
-    public static RoutineList getInstance(){
-        return list;
-    }
+    public static RoutineList getInstance(){ return list; }
 
-    public ArrayList<Object> getRoutines(){
-        return routines;
-    }
+    public ArrayList<Object> getRoutines(){ return routines; }
+
+    public void setRoutines(ArrayList<Object> routines) { this.routines = routines; }
 }

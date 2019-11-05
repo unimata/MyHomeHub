@@ -17,6 +17,7 @@ import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.Fragments.AccountMenuFragment;
 
 import com.homehub.dragan.myhomehub.R;
+import com.homehub.dragan.myhomehub.UI.Routine;
 import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -89,6 +90,7 @@ public class AutomationActivity extends AppCompatActivity {
 
     private ArrayList<Object> getRoutineList() {
         ArrayList<Object> list = items;
+        //list.add(new Routine("Bolbu","go o", "noon"));
         //Log.d("debuggin", list.toString());
         return list;
     }
