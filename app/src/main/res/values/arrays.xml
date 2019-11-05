@@ -29,9 +29,15 @@
     </string-array>
 
     <string-array name="DummyDeviceRegistrations">
-        <item>Philips Hue Smart Bulb (DUMMY)</item>
-        <item>Google Home (DUMMY)</item>
-        <item>Alexa (DUMMY)</item>
+        <item>Philips Hue Smart Bulb</item>
+        <item>Alexa</item>
+        <item>WeMo Smart Outlet</item>
+    </string-array>
+
+    <string-array name="DummyNewDeviceRegistrations">
+        <item>Google Home</item>
+        <item>Chromecast</item>
+        <item>WeMo Smart Outlet</item>
     </string-array>
 
     <string-array name="sorted_descriptions">

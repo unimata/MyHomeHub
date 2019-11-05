@@ -28,8 +28,6 @@
         </activity>
         <activity android:name=".Activities.WidgetConfigActivity" />
         <activity android:name=".Activities.EntityActivity" />
-        <activity android:name=".Activities.CreateRoutineActivity" />
-        <activity android:name=".Activities.ManageRoutinesActivity" />
         <activity
             android:name=".Activities.HomeHubActivity"
             android:label="My Home Hub" />
