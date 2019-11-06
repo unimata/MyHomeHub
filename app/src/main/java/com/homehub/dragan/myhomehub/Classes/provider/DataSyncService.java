@@ -210,6 +210,7 @@ public class DataSyncService extends Service {
                     .put("id", ++nextNum)
                     .toString();
             sendCommand(command);
+            Log.d("Yo","sent change");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -254,14 +255,12 @@ public class DataSyncService extends Service {
                             payload.entity = newEntity;
                             mEventEmitter.onNext(payload);
 
-                            getContentResolver().update(Uri.parse("content://com.payano.homeassistant.provider.EntityContentProvider/"), newEntity.getContentValues(), "ENTITY_ID='" + newEntity.entityId + "'", null);
+
+                            getContentResolver().update(Uri.parse("content://com.homehub.dragan.myhomehub.Classes.provider.EntityContentProvider/"), newEntity.getContentValues(), "ENTITY_ID='" + newEntity.entityId + "'", null);
+                            Log.d("Yo","recived change");
                         }
                         mEntities.put(entityId, eventResponse.event.data.newState);
                     }
-                    //CommonUtil.logLargeString("YouQi", "Deflate: " + CommonUtil.deflate(eventResponse));
-                    break;
-                case "result":
-                    //ResultResponse resultResponse = CommonUtil.inflate(s, ResultResponse.class);
                     break;
                 default:
                     CommonUtil.logLargeString("YouQi", "Not Mapped: " + s);

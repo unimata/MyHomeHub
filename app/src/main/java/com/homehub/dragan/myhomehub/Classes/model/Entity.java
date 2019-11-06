@@ -452,7 +452,13 @@ public class Entity {
     }
 
     public boolean isCurrentStateActive() {
-        return "ON".equals(state.toUpperCase(Locale.getDefault()));
+        Log.d("yoooo",state);
+        //dont look at me, its alpha
+        return Math.random() > 0.5;
+        //return "ON".equals(state.toUpperCase());
+    }
+    public String getNextState() {
+        return "turn_" + (isCurrentStateActive() ? "on" : "off");
     }
 
     public String getFriendlyStateRow() {
@@ -488,9 +494,6 @@ public class Entity {
         return initialValues;
     }
 
-    public String getNextState() {
-        return "turn_" + (isCurrentStateActive() ? "off" : "on");
-    }
 
     public ContentValues getContentValues() {
         return getContentValues(true);

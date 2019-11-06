@@ -306,6 +306,7 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
         if (getActivity() instanceof EntityProcessInterface) {
             boolean isConsumed = EntityHandlerHelper.onEntityClick((EntityProcessInterface) getActivity(), entity);
             if (isConsumed) {
+                Log.d("yo","conssumed");
                 if (mSharedPref.getBoolean("sound_effect", true)) {
                     if (viewHolder.isActivated()) {
                         mClickUp.start();
@@ -320,13 +321,12 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     @Override
     public boolean onEntityUpperViewLongClick(EntityAdapter.EntityTileViewHolder viewHolder, Entity entity) {
         Boolean consumed = EntityHandlerHelper.onEntityLongClick((EntityProcessInterface) getActivity(), entity);
+        Log.d("YouQi", consumed.toString());
         triggerAnswer(entity, "long");
         if (consumed) {
             if (mSharedPref.getBoolean("sound_effect", true)) {
                 mClickDown.start();
             }
-        } else {
-            showToast("NOpe");
         }
         return true;
     }
