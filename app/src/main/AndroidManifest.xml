@@ -15,7 +15,6 @@
         <activity android:name=".Activities.CreateRoutineActivity"></activity>
         <activity android:name=".Activities.DeviceRegWebActivity"></activity>
         <activity android:name=".Activities.AddDeviceRegActivity" />
-        <activity android:name=".Activities.ManageRoutinesActivity" />
 
         <activity
             android:name=".Activities.LoginActivity"

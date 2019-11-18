@@ -58,7 +58,7 @@
         <item>Turn off</item>
     </string-array>
     <string-array name="fake_activators">
-        <item>--- Choose an activator ---</item>
+        <item>--- Choose a trigger ---</item>
         <item>Sunrise</item>
         <item>Sunset</item>
     </string-array>

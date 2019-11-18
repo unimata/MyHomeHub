@@ -29,13 +29,6 @@ public class RoutineViewHolder extends RecyclerView.ViewHolder {
         btnDelete = (Button) v.findViewById(R.id.deleteBtn);
         btnEdit = (Button) v.findViewById(R.id.editBtn);
 
-        //btnDelete.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-
-                // need to make this button delete stuff
-        //    }
-        //});
     }
 
     public void setDeviceName(TextView deviceName) {

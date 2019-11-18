@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.homehub.dragan.myhomehub.Activities.AutomationActivity;
 import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.R;
 
@@ -13,12 +14,24 @@ import java.util.List;
 
 public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> items;
+    private ViewGroup vg;
+
+    private List<Routine> items;
 
     @Override
     public int getItemCount() { return this.items.size(); }
 
-    public RoutineRecyclerViewAdapter(List<Object> items) {
+    public void removeItem(int i) {
+        Object theRemovedItem = RoutineList.getInstance().routines.get(i);
+        // remove your item from data base
+        RoutineList.getInstance().routines.remove(i);
+        notifyItemRemoved(i);
+        notifyItemRangeChanged(i, getItemCount()); // this prevents app from crashing when routines are deleted in incorrect order
+        //TODO: find a way to make RecyclerView invisible when list is emptied
+
+    }
+
+    public RoutineRecyclerViewAdapter(List<Routine> items) {
         this.items = items;
     }
 
@@ -29,24 +42,35 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View v1;
 
+        vg = viewGroup;
+
         v1 = inflater.inflate(R.layout.routine_viewholder_relative, viewGroup, false);
 
         viewHolder = new RoutineViewHolder(v1);
 
+        //viewGroup.setVisibility(View.VISIBLE); // this works
+
+
+
         return viewHolder;
     }
 
+    // makes the RecyclerView invisible when RoutineList is empty
+    public void makeInvisible(ViewGroup viewGroup) {
+        viewGroup.setVisibility(View.INVISIBLE);
+    }
+
+
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int i) {
         RoutineViewHolder rvh1 = (RoutineViewHolder) viewHolder;
         configureRoutineViewHolder(rvh1, i);
         rvh1.btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Object theRemovedItem = RoutineList.getInstance().routines.get(i);
-                // remove your item from data base
-                RoutineList.getInstance().routines.remove(i);  // remove the item from list
-                notifyItemRemoved(i); // notify the adapter about the removed item
-                //TODO: find a way to make RecyclerView invisible when list is emptied
+                removeItem(i);
+                if (RoutineList.getInstance().routines.isEmpty()) {
+                    makeInvisible(vg);
+                }
             }
         });
     }
@@ -57,5 +81,4 @@ public class RoutineRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         rvh1.getActionTv().setText(routine.getAction());
         rvh1.getActivatorTv().setText("At " + routine.getActivator() + ", ");
     }
-
 }

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +53,7 @@ public class AutomationActivity extends AppCompatActivity {
         }
     };
 
-    public ArrayList<Object> items = RoutineList.getInstance().getRoutines();
+    public ArrayList<Routine> items = RoutineList.getInstance().getRoutines();
     RecyclerView rvRoutines;
 
     @Override
@@ -61,11 +62,13 @@ public class AutomationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_automation);
 
         //RecyclerView rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
+        rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
+        //rvRoutines.getAdapter().bindViewHolder()
 
         refreshRoutineList();
 
         Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
-        Button btnManageRoutines = (Button) findViewById(R.id.btnManageRoutines);
+        //Button btnManageRoutines = (Button) findViewById(R.id.btnManageRoutines);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -80,18 +83,17 @@ public class AutomationActivity extends AppCompatActivity {
             }
         });
 
-        btnManageRoutines.setOnClickListener(new View.OnClickListener() {
+        rvRoutines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getApplicationContext(), ManageRoutinesActivity.class);
-                startActivity(intent);
+                Log.d("message","clicked");
             }
         });
+
     }
 
-    private ArrayList<Object> getRoutineList() {
-        ArrayList<Object> list = items;
+    private ArrayList<Routine> getRoutineList() {
+        ArrayList<Routine> list = items;
         //list.add(new Routine("Bolbu","go o", "noon"));
         //Log.d("debuggin", list.toString());
         return list;
@@ -99,7 +101,6 @@ public class AutomationActivity extends AppCompatActivity {
 
     public void refreshRoutineList(){
 
-        rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
         if (RoutineList.getInstance().routines.isEmpty()) {
             rvRoutines.setVisibility(View.INVISIBLE);
         } else {
