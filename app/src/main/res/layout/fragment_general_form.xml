@@ -123,6 +123,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Postal Code" />
+
     </android.support.design.widget.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_general_form_info_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0" />
 
 </LinearLayout>

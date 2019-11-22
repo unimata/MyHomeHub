@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "739109254924-ck6up4dcg3t8q5ag1a3lrnfra600qodv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.homehub.dragan.myhomehub",
+            "certificate_hash": "ac989bf7741c7ba832450e331fa20390b3363954"
+          }
+        },
+        {
           "client_id": "739109254924-9itfcgs70v1jv07k4h35ba19j2mu4p1v.apps.googleusercontent.com",
           "client_type": 3
         }

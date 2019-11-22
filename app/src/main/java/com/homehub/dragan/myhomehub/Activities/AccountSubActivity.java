@@ -1,8 +1,12 @@
 package com.homehub.dragan.myhomehub.Activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.homehub.dragan.myhomehub.Fragments.AppSettingsFragment;
 import com.homehub.dragan.myhomehub.Fragments.DeviceRegistrationsFragment;
@@ -65,5 +69,36 @@ public class AccountSubActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(accSelectedListFrag instanceof GeneralFormFragment)
+        {
+            //show dialog to urge user to make sure to CONFIRM new details
+            AlertDialog.Builder builder = new AlertDialog.Builder(AccountSubActivity.this);
+            builder.setMessage("Please be sure your info is correct.")
+                    .setPositiveButton("Continue and Save", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            //user confirmed that they did it, so finish and close
+                            AccountSubActivity.super.onBackPressed();
+
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // user cancelled the dialog
+                        }
+                    });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        }
+        else{
+            super.onBackPressed();
+        }
+
     }
 }
