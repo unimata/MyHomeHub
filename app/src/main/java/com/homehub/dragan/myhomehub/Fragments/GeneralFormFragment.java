@@ -58,9 +58,9 @@ public class GeneralFormFragment extends Fragment {
         inputPostalCode = view.findViewById(R.id.input_postal_code);
 
         //get data from firebase (but also maintain connection)
-        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.DataStatus() {
+        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.UserDataStatus() {
             @Override
-            public void DataIsLoaded(List<General_Form_User> users, List<String> keys) {
+            public void UserDataIsLoaded(List<General_Form_User> users, List<String> keys) {
                 view.findViewById(R.id.loading_general_form_info_pb).setVisibility(View.GONE);
 
                 inputFirstName.setText(users.get(0).getFirst_name());
@@ -75,14 +75,16 @@ public class GeneralFormFragment extends Fragment {
             }
 
             @Override
-            public void DataIsInserted() {
+            public void UserDataIsUpdated() {
 
             }
 
             @Override
-            public void DataIsUpdated() {
+            public void DataIsInserted() {
 
             }
+
+
 
             @Override
             public void DataIsDeleted() {
@@ -124,9 +126,9 @@ public class GeneralFormFragment extends Fragment {
 
         //update firebase db
         //get data from firebase (but also maintain connection)
-        new FirebaseDatabaseHelper().updateUsers(mainKey, user, new FirebaseDatabaseHelper.DataStatus() {
+        new FirebaseDatabaseHelper().updateUsers(mainKey, user, new FirebaseDatabaseHelper.UserDataStatus() {
                     @Override
-                    public void DataIsLoaded(List<General_Form_User> users, List<String> keys) {
+                    public void UserDataIsLoaded(List<General_Form_User> users, List<String> keys) {
 
                     }
 
@@ -136,7 +138,7 @@ public class GeneralFormFragment extends Fragment {
                     }
 
                     @Override
-                    public void DataIsUpdated() {
+                    public void UserDataIsUpdated() {
                         Toast.makeText(activity, "User info has been" +
                                 " updated successfully", Toast.LENGTH_SHORT ).show();
 
@@ -147,17 +149,6 @@ public class GeneralFormFragment extends Fragment {
 
                     }
                 });
-
-        // Write a message to the database
-        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue(firstName);
-        myRef.setValue(lastName);
-        myRef.setValue(email);
-        myRef.setValue(phoneNum);
-        myRef.setValue(bday);
-        myRef.setValue(postalCode);*/
 
 
         super.onDestroy();

@@ -28,16 +28,19 @@
         <item>10</item>
     </string-array>
 
-    <string-array name="DummyDeviceRegistrations">
+
+    <string-array name="NewDeviceRegistrations">
+        <item>Google Home</item>
+        <item>Chromecast</item>
         <item>Philips Hue Smart Bulb</item>
-        <item>Alexa</item>
         <item>WeMo Smart Outlet</item>
     </string-array>
 
-    <string-array name="DummyNewDeviceRegistrations">
-        <item>Google Home</item>
-        <item>Chromecast</item>
-        <item>WeMo Smart Outlet</item>
+    <string-array name="NewDeviceRegistrationsURLS">
+        <item>https://accounts.google.com/</item>
+        <item>https://accounts.google.com/</item>
+        <item>https://account.meethue.com/</item>
+        <item>NONE</item>
     </string-array>
 
     <string-array name="sorted_descriptions">
