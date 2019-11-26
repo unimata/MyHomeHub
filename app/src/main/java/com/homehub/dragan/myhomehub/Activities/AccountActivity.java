@@ -33,7 +33,6 @@ public class AccountActivity extends AppCompatActivity {
                     case R.id.navigation_account:
                         return true;
                     case R.id.navigation_automation:
-                        mTextMessage.setText(R.string.title_automation);
                         intent = new Intent(AccountActivity.this, AutomationActivity.class);
                         startActivity(intent);
                         return true;
