@@ -44,6 +44,7 @@ public class EditRoutineActivity extends HomeHubActivity {
 
     ArrayList<String> devices = new ArrayList<String>();
     ArrayList<String> actions = new ArrayList<String>();
+    ArrayList<String> timeActivators = new ArrayList<String>();
 
     int position;
     int entityPosition;
@@ -64,6 +65,11 @@ public class EditRoutineActivity extends HomeHubActivity {
         mEntities = mDatabase.getEntities();
 
         devices.add("-- choose a device --");
+
+        timeActivators.clear();
+        timeActivators.add("-- choose a time to trigger --");
+        timeActivators.add("Sunrise");
+        timeActivators.add("Sunset");
 
         for (Entity e : mEntities) {
             //Log.d("yo", e.getFriendlyName());
@@ -90,6 +96,12 @@ public class EditRoutineActivity extends HomeHubActivity {
 
         tvDevice.setText(selectedRoutine.getDeviceName());
 
+        if (selectedRoutine.getTrigger().isTriggeredOnDeviceAction) {
+            populateActivators(devices);
+        } else {
+            populateActivators(timeActivators);
+        }
+
         //populating Actions spinner
         ArrayAdapter<String> actionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, actions);
         actionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,10 +112,14 @@ public class EditRoutineActivity extends HomeHubActivity {
         triggerTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sprTriggerType.setAdapter(triggerTypeAdapter);
 
-        //populating Activators spinner
-        ArrayAdapter<String> activatorAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, devices);
-        activatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sprActivators.setAdapter(activatorAdapter);
+        if (selectedRoutine.getTrigger().isTriggeredOnDeviceAction == false) {
+            devices.clear();
+            devices.add("-- choose a time to trigger --");
+            devices.add("Sunrise");
+            devices.add("Sunset");
+        }
+
+
 
         //populating the TriggerActions spinner
         ArrayAdapter<String> triggerActionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, actions);
@@ -226,8 +242,16 @@ public class EditRoutineActivity extends HomeHubActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
                     selectedRoutine.getTrigger().setIsTriggeredOnDeviceAction(true);
+                    tvTriggerAction.setVisibility(View.VISIBLE);
+                    sprTriggerAction.setVisibility(View.VISIBLE);
+                    tvActivator.setText("Triggered By:");
+                    populateActivators(devices);
+                    sprActivators.setSelection(selectedRoutine.getTriggerDeviceNum());
                 } else if (position == 2) {
+                    tvTriggerAction.setVisibility(View.GONE);
+                    sprTriggerAction.setVisibility(View.GONE);
                     selectedRoutine.getTrigger().setIsTriggeredOnDeviceAction(false);
+                    populateActivators(timeActivators);
                 } else {
                     //Toast.makeText(getBaseContext(), "Hmm", Toast.LENGTH_SHORT).show();
                 }
@@ -254,9 +278,18 @@ public class EditRoutineActivity extends HomeHubActivity {
 
             }
         });
+
+
     }
 
     public void setSelectedRoutine(Routine selectedRoutine) {
         this.selectedRoutine = selectedRoutine;
+    }
+
+    private void populateActivators (ArrayList<String> activators) {
+        //populating Activators spinner
+        ArrayAdapter<String> activatorAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, activators);
+        activatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sprActivators.setAdapter(activatorAdapter);
     }
 }

@@ -71,7 +71,7 @@ public class AutomationActivity extends AppCompatActivity {
         Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
         Button btnTestRoutines = (Button) findViewById(R.id.btnTestRoutines);
 
-        //btnTestRoutines.setVisibility(View.GONE);
+        btnTestRoutines.setVisibility(View.GONE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
