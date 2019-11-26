@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 
-import android.support.v4.app.Fragment;
-
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,17 +14,17 @@ import android.view.View;
 import android.widget.Button;
 
 import com.homehub.dragan.myhomehub.Classes.RoutineList;
-import com.homehub.dragan.myhomehub.Fragments.AccountMenuFragment;
+import com.homehub.dragan.myhomehub.Classes.model.Trigger;
 
 import com.homehub.dragan.myhomehub.R;
-import com.homehub.dragan.myhomehub.UI.Routine;
+import com.homehub.dragan.myhomehub.Classes.model.Routine;
 import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-import static android.view.View.GONE;
-
 public class AutomationActivity extends AppCompatActivity {
+
+    // old navigation bar
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,6 +55,8 @@ public class AutomationActivity extends AppCompatActivity {
     public ArrayList<Routine> items = RoutineList.getInstance().getRoutines();
     RecyclerView rvRoutines;
 
+    private Trigger dummyTrigger = new Trigger("me trigger");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +69,17 @@ public class AutomationActivity extends AppCompatActivity {
         refreshRoutineList();
 
         Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
-        //Button btnManageRoutines = (Button) findViewById(R.id.btnManageRoutines);
+        Button btnTestRoutines = (Button) findViewById(R.id.btnTestRoutines);
+
+        //btnTestRoutines.setVisibility(View.GONE);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_automation);
+
+        dummyTrigger.setIsTriggeredOnDeviceAction(false);
+
+
 
         btnNewRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +87,16 @@ public class AutomationActivity extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(getApplicationContext(), CreateRoutineActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnTestRoutines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RoutineList.getInstance().routines.add(new Routine("WeMo","Do something","Something", dummyTrigger));
+                RoutineList.getInstance().routines.add(new Routine("Hue","Do something","Something", dummyTrigger));
+                RoutineList.getInstance().routines.add(new Routine("LiFX","Do something","Something", dummyTrigger));
+                refreshRoutineList();
             }
         });
 
@@ -105,8 +122,14 @@ public class AutomationActivity extends AppCompatActivity {
             rvRoutines.setVisibility(View.INVISIBLE);
         } else {
             rvRoutines.setVisibility(View.VISIBLE);
-            rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList()));
+            rvRoutines.setAdapter(new RoutineRecyclerViewAdapter(getRoutineList(),this));
             rvRoutines.setLayoutManager(new LinearLayoutManager(this));
         }
+    }
+
+    public void editButtonPressed(){
+        Intent intent;
+        intent = new Intent(getApplicationContext(), EditRoutineActivity.class);
+        startActivity(intent);
     }
 }
