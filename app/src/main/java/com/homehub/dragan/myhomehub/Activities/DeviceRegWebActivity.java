@@ -2,12 +2,14 @@ package com.homehub.dragan.myhomehub.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.homehub.dragan.myhomehub.Classes.firebase.FirebaseDatabaseHelper;
 import com.homehub.dragan.myhomehub.Classes.model.Device_Registration;
+import com.homehub.dragan.myhomehub.Classes.model.General_Form_User;
 import com.homehub.dragan.myhomehub.R;
 
 import java.util.List;
@@ -27,17 +30,50 @@ import okhttp3.Cookie;
 public class DeviceRegWebActivity extends AppCompatActivity {
 
     private WebView browserWebView;
+    private Button btnFillData;
     private Button btnFinish;
     private String deviceName;
     private String device;
     private String newDeviceRegKey;
     private String deviceURL;
     private ProgressBar loadingWebviewPB;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_reg_web);
+
+
+        //get user data from firebase
+        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.UserDataStatus() {
+            @Override
+            public void UserDataIsLoaded(List<General_Form_User> users, List<String> keys) {
+                firstName = users.get(0).getFirst_name();
+                lastName = users.get(0).getLast_name();
+                email = users.get(0).getEmail();
+            }
+
+            @Override
+            public void UserDataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
 
         //get strings and key from previous activity
         deviceName = getIntent().getStringExtra("deviceName");
@@ -47,13 +83,14 @@ public class DeviceRegWebActivity extends AppCompatActivity {
 
         //get btn object
         btnFinish = findViewById(R.id.btnFinish);
+        btnFillData = findViewById(R.id.btnFillData);
         btnFinish.setEnabled(false);
+        btnFillData.setEnabled(false);
 
         //get pb object
         loadingWebviewPB = findViewById(R.id.loading_webview_pb);
 
 
-        //TODO: CREATE AUTOFILL SERVICE!!!!!!!!
         //TODO: Edit and improve webview when possible
 
         // get webview object
@@ -63,29 +100,47 @@ public class DeviceRegWebActivity extends AppCompatActivity {
         browserWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
                 if (loadingWebviewPB.isShown()) {
                     loadingWebviewPB.setVisibility(View.GONE);
                     btnFinish.setEnabled(true);
+                    btnFillData.setEnabled(true);
                 }
+
             }
         });
 
+        //webvieww settings
         browserWebView.getSettings().setSaveFormData(false);
         browserWebView.getSettings().setJavaScriptEnabled(true);
         browserWebView.getSettings().setLoadWithOverviewMode(true);
         browserWebView.getSettings().setUseWideViewPort(true);
+        browserWebView.getSettings().setDomStorageEnabled(true);
         browserWebView.clearCache(true);
         browserWebView.clearHistory();
 
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(false);
+        cookieManager.removeAllCookies(null);
 
 
         //load dummy url for now
         browserWebView.loadUrl(deviceURL);
 
+        //set up event listener for fill data button
+        btnFillData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String js = "javascript:" +
+                        "var addFirstName =document.getElementById('firstName').value = '" + firstName + "'; "  +
+                        "var addLastName =document.getElementById('lastName').value = '" + lastName + "'; ";
 
-        //set up event listener for button
+                browserWebView.loadUrl(js);
+            }
+        });
+
+
+        //set up event listener for finish button
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
