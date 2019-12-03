@@ -15,6 +15,7 @@
         <activity android:name=".Activities.CreateRoutineActivity"></activity>
         <activity android:name=".Activities.DeviceRegWebActivity"></activity>
         <activity android:name=".Activities.AddDeviceRegActivity" />
+        <activity android:name=".Activities.EditRoutineActivity"/>
 
         <activity
             android:name=".Activities.LoginActivity"
@@ -82,6 +83,7 @@
 
         <service android:name=".Classes.provider.DataSyncService" />
     </application>
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

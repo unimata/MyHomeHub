@@ -129,7 +129,7 @@ public class AutomationActivity extends AppCompatActivity {
 
     public void editButtonPressed(){
         Intent intent;
-        intent = new Intent(getApplicationContext(), EditRoutineActivity.class);
+        intent = new Intent(AutomationActivity.this, EditRoutineActivity.class);
         startActivity(intent);
     }
 }
