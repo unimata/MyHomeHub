@@ -9,12 +9,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity android:name=".Activities.CreateRoutineActivity"></activity>
         <activity android:name=".Activities.DeviceRegWebActivity"></activity>
         <activity android:name=".Activities.AddDeviceRegActivity" />
-        <activity android:name=".Activities.ManageRoutinesActivity" />
+        <activity android:name=".Activities.EditRoutineActivity"/>
 
         <activity
             android:name=".Activities.LoginActivity"
@@ -28,8 +29,6 @@
         </activity>
         <activity android:name=".Activities.WidgetConfigActivity" />
         <activity android:name=".Activities.EntityActivity" />
-        <activity android:name=".Activities.CreateRoutineActivity" />
-        <activity android:name=".Activities.ManageRoutinesActivity" />
         <activity
             android:name=".Activities.HomeHubActivity"
             android:label="My Home Hub" />
@@ -74,10 +73,17 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/entity_widget_info" />
         </receiver>
+        <receiver
+            android:name=".Classes.provider.DataSyncService$TerminateConnectionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="TERMINATE_CONNECTION" />
+            </intent-filter>
+        </receiver>
 
         <service android:name=".Classes.provider.DataSyncService" />
-            android:label="@string/app_name" />
     </application>
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -28,10 +28,19 @@
         <item>10</item>
     </string-array>
 
-    <string-array name="DummyDeviceRegistrations">
-        <item>Philips Hue Smart Bulb (DUMMY)</item>
-        <item>Google Home (DUMMY)</item>
-        <item>Alexa (DUMMY)</item>
+
+    <string-array name="NewDeviceRegistrations">
+        <item>Google Home</item>
+        <item>Chromecast</item>
+        <item>Philips Hue Smart Bulb</item>
+        <item>WeMo Smart Outlet</item>
+    </string-array>
+
+    <string-array name="NewDeviceRegistrationsURLS">
+        <item>https://accounts.google.com/</item>
+        <item>https://accounts.google.com/</item>
+        <item>https://account.meethue.com/</item>
+        <item>NONE</item>
     </string-array>
 
     <string-array name="sorted_descriptions">
@@ -41,18 +50,18 @@
     </string-array>
 
     <string-array name="fake_devices">
-        <item>--- Choose a device ---</item>
+        <item>--- choose a device ---</item>
         <item>LiFX LED Light</item>
         <item>Phillips Hue</item>
         <item>WeMo Smart Outlet</item>
     </string-array>
-    <string-array name="fake_actions">
-        <item>--- Choose an action ---</item>
-        <item>Turn on</item>
-        <item>Turn off</item>
+    <string-array name="trigger_types">
+        <item>--- choose a type of trigger ---</item>
+        <item>Triggered on action from other device</item>
+        <item>Time-based</item>
     </string-array>
     <string-array name="fake_activators">
-        <item>--- Choose an activator ---</item>
+        <item>--- choose a trigger ---</item>
         <item>Sunrise</item>
         <item>Sunset</item>
     </string-array>

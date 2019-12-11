@@ -1,10 +1,14 @@
 package com.homehub.dragan.myhomehub.UI;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.homehub.dragan.myhomehub.Activities.CreateRoutineActivity;
+import com.homehub.dragan.myhomehub.Classes.RoutineList;
 import com.homehub.dragan.myhomehub.R;
 
 public class RoutineViewHolder extends RecyclerView.ViewHolder {
@@ -12,13 +16,19 @@ public class RoutineViewHolder extends RecyclerView.ViewHolder {
     private TextView actionTv;
     private TextView activatorTv;
 
+    public Button btnDelete;
+    public Button btnEdit;
+
     public RoutineViewHolder(View v) {
         super(v);
 
         deviceName = (TextView) v.findViewById(R.id.deviceNameTv);
         actionTv = (TextView) v.findViewById(R.id.actionTv);
         activatorTv = (TextView) v.findViewById(R.id.activatorTv);
-        //gotta figure out how to link the viewholder Java file with a viewholder res file
+
+        btnDelete = (Button) v.findViewById(R.id.deleteBtn);
+        btnEdit = (Button) v.findViewById(R.id.editBtn);
+
     }
 
     public void setDeviceName(TextView deviceName) {

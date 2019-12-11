@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AutomationActivity">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/navigation" />
-
     <TextView
         android:id="@+id/tvAutomationRoutines"
         android:layout_width="wrap_content"
@@ -26,21 +15,33 @@
         android:layout_marginTop="20dp"
         android:text="Automation Routines:"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigation" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvNoRoutines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="5dp"
+        android:text="No automation routines created"
+        android:padding="1dp"
+        app:layout_constraintEnd_toEndOf="@id/btnManageRoutines"
+        app:layout_constraintStart_toStartOf="@+id/tvAutomationRoutines"
+        app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAutomationRoutines"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:padding="1dp"
         android:background="@drawable/outline"
         app:layout_constraintBottom_toTopOf="@+id/btnCreateRoutine"
         app:layout_constraintEnd_toEndOf="@id/btnManageRoutines"
         app:layout_constraintStart_toStartOf="@+id/tvAutomationRoutines"
-        app:layout_constraintTop_toBottomOf="@+id/btnManageRoutines" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
 
     <Button
         android:id="@+id/btnCreateRoutine"
@@ -50,7 +51,8 @@
         android:layout_marginBottom="8dp"
         android:text="Create New Routine"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"/>
 
     <Button
         android:id="@+id/btnManageRoutines"
@@ -60,6 +62,28 @@
         android:layout_marginRight="12dp"
         android:padding="3dp"
         android:text="Manage"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigation" />
+        app:layout_constraintBottom_toTopOf="@id/navigation"/>
+
+    <Button
+        android:id="@+id/btnTestRoutines"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:text="Load Test Routines"
+        app:layout_constraintStart_toEndOf="@+id/btnCreateRoutine"
+        app:layout_constraintTop_toTopOf="@+id/btnCreateRoutine"
+        android:visibility="gone" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="bottom"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/navigation" />
+
 </android.support.constraint.ConstraintLayout>

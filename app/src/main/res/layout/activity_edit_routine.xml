@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.CreateRoutineActivity">
+    tools:context=".Activities.EditRoutineActivity">
 
     <TextView
         android:id="@+id/tvAutomationRoutines"
@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:paddingTop="20dp"
-        android:text="New Routine"
+        android:text="Edit Routine"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/navigation" />
 
     <TextView
-        android:id="@+id/tvDevice"
+        android:id="@+id/tvWhatever"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -29,12 +29,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAutomationRoutines" />
 
-    <Spinner
-        android:id="@+id/sprDevices"
+    <TextView
+        android:id="@+id/tvDevice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvDevice"
-        app:layout_constraintTop_toTopOf="@id/tvDevice" />
+        android:layout_marginStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="error: no device"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/tvWhatever"
+        app:layout_constraintTop_toTopOf="@id/tvWhatever" />
 
     <TextView
         android:id="@+id/tvAction"
@@ -46,7 +50,7 @@
         android:text="Action:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDevice" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWhatever" />
 
     <Spinner
         android:id="@+id/sprActions"
@@ -54,26 +58,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tvAction"
         app:layout_constraintTop_toTopOf="@id/tvAction" />
-
-    <TextView
-        android:id="@+id/tvTriggerType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingEnd="10dp"
-        android:text="Trigger Type:"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAction" />
-
-    <Spinner
-        android:id="@+id/sprTriggerType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:dropDownWidth="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tvTriggerType"
-        app:layout_constraintTop_toTopOf="@id/tvTriggerType" />
 
     <TextView
         android:id="@+id/tvActivator"
@@ -94,6 +78,35 @@
         app:layout_constraintStart_toEndOf="@id/tvActivator"
         app:layout_constraintTop_toTopOf="@id/tvActivator" />
 
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:layout_marginTop="12dp"
+        android:text="Finish"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTriggerAction" />
+
+    <TextView
+        android:id="@+id/tvTriggerType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="10dp"
+        android:text="Trigger Type:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAction" />
+
+    <Spinner
+        android:id="@+id/sprTriggerType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvTriggerType"
+        app:layout_constraintTop_toTopOf="@id/tvTriggerType" />
+
     <TextView
         android:id="@+id/tvTriggerAction"
         android:layout_width="wrap_content"
@@ -112,15 +125,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tvTriggerAction"
         app:layout_constraintTop_toTopOf="@id/tvTriggerAction" />
-
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:layout_marginTop="12dp"
-        android:text="Create Routine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTriggerAction" />
 
 </android.support.constraint.ConstraintLayout>

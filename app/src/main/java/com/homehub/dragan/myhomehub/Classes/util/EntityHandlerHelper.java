@@ -3,14 +3,20 @@ package com.homehub.dragan.myhomehub.Classes.util;
 import android.app.FragmentManager;
 
 import com.homehub.dragan.myhomehub.Classes.model.Entity;
+import com.homehub.dragan.myhomehub.Classes.model.rest.CallServiceRequest;
 import com.homehub.dragan.myhomehub.Classes.shared.EntityProcessInterface;
 
 public class EntityHandlerHelper {
 
     public static boolean onEntityClick(final EntityProcessInterface epi, final Entity entity) {
-        boolean isConsumed = true;
         FragmentManager fragmentManager = epi.getFragmentManager();
-//        HomeAssistantServer server = epi.getServer();
+        boolean isConsumed;
+        //HomeHubServer server = epi.
+        //Log.d("yop",entity.getNextState());
+        epi.callService("homeassistant", entity.getNextState(), new CallServiceRequest(entity.entityId));
+        isConsumed = true;
+
+
 //
 //        if (entity.isGroup()) {
 //            GroupFragment fragment = GroupFragment.newInstance(entity, server);
