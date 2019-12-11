@@ -97,7 +97,6 @@ public class MainActivity extends HomeHubActivity implements
     private SharedPreferences mSharedPref;
 
     private HomeHubServer mCurrentServer;
-    //private ProgressBar mProgressBar;
     private RefreshTask mRefreshTask;
     private Call<ArrayList<Entity>> mCall;
     private boolean doubleBackToExitPressedOnce;
@@ -109,7 +108,6 @@ public class MainActivity extends HomeHubActivity implements
     private boolean runonce = false;
 
     private BottomNavigationView mBottomNavigation;
-    //private MaterialSearchView mSearchView;
     private MenuItem mMenuHoursand;
 
     private ViewPagerAdapter mViewPagerAdapter;
@@ -119,13 +117,13 @@ public class MainActivity extends HomeHubActivity implements
     private DatabaseManager mDatabase;
     private ArrayList<Group> mGroups;
 
-    //Bound Service (Experimental)
+    //Bound Service
     private DataSyncService mService;
     private boolean mBound;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            // We bind to LocalService, cast the IBinder and get LocalService instance
             DataSyncService.LocalBinder binder = (DataSyncService.LocalBinder) service;
             mService = binder.getService();
             mBound = true;
@@ -168,7 +166,6 @@ public class MainActivity extends HomeHubActivity implements
 
         Log.d("YouQi", "onCreateOptionsMenu");
         mMenuHoursand = menu.findItem(R.id.action_logout);
-        //mSearchView.setMenuItem(mMenuSearch);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -186,8 +183,6 @@ public class MainActivity extends HomeHubActivity implements
         mDatabase = DatabaseManager.getInstance(this);
         mServers = mDatabase.getConnections();
         mCurrentServer = mServers.get(mSharedPref.getInt("connectionIndex", 0));
-        Log.d("Yo", mCurrentServer.getBaseUrl());
-        //mProgressBar = findViewById(R.id.progressBar);
 
         Log.d("Yo", "onCreate");
 
@@ -323,7 +318,6 @@ public class MainActivity extends HomeHubActivity implements
         mViewPager.setOffscreenPageLimit(20);
 
         mTabLayout.setupWithViewPager(mViewPager);
-        //mTabLayout.setSelectedTabIndicatorHeight(CommonUtil.pxFromDp(this, 4f));
         for (int i = 0; i < mGroups.size(); ++i) {
             Group group = mGroups.get(i);
             if (group.hasMdiIcon()) {
@@ -386,8 +380,6 @@ public class MainActivity extends HomeHubActivity implements
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.d("YouQi", "Destroying MainActivity");
-
         if (mBound) {
             getApplicationContext().unbindService(mConnection);
             mBound = false;
@@ -428,15 +420,11 @@ public class MainActivity extends HomeHubActivity implements
 
             case 2001: {
                 if (resultCode == Activity.RESULT_OK) {
-
                     Group group = CommonUtil.inflate(data.getStringExtra("group"), Group.class);
-                    Log.d("YouQi", "Received Group:" + group.groupId);
 
                     RxPayload payload = RxPayload.getInstance("EDIT");
                     payload.group = group;
                     mEventEmitter.onNext(payload);
-                    //Toast.makeText(this, "OK!", Toast.LENGTH_SHORT).show();
-                    //getContentResolver().notifyChange(EntityContentProvider.getUrl(), null);
                 }
                 break;
             }
@@ -451,22 +439,6 @@ public class MainActivity extends HomeHubActivity implements
         }
     }
 
-    //private void showSettings() {
-    //    Intent i = new Intent(this, SettingsActivity.class);
-   //     //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-     //   startActivityForResult(i, 2000);
-     //   overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
-    //}
-
-
-
-
-    private void addConnection() {
-        //mDrawerLayout.closeDrawers();
-        //ConnectionFragment fragment = ConnectionFragment.newInstance(null);
-        //fragment.show(getFragmentManager(), null);
-        //Toast.makeText(mService, "add connection", Toast.LENGTH_SHORT).show();
-    }
 
     public void refreshConnections() {
         Log.d("YouQi", "refreshConnections");
@@ -527,17 +499,14 @@ public class MainActivity extends HomeHubActivity implements
     @Override
     public void callService(final String domain, final String service, CallServiceRequest serviceRequest) {
         if (mService != null && mService.isWebSocketRunning()) {
-            Log.d("YouQi", "Using WebSocket");
             mService.callService(domain, service, serviceRequest);
         } else if (mCall == null) {
-            Log.d("YouQi", "Using HTTP");
             mCall = ServiceProvider.getApiService(mCurrentServer.getBaseUrl()).callService(mCurrentServer.getBearerHeader(), domain, service, serviceRequest);
             mCall.enqueue(new Callback<ArrayList<Entity>>() {
                 @Override
                 public void onResponse(@NonNull Call<ArrayList<Entity>> call, @NonNull Response<ArrayList<Entity>> response) {
                     mCall = null;
                     ArrayList<Entity> restResponse = response.body();
-                    CommonUtil.logLargeString("YouQi", "service restResponse: " + CommonUtil.deflate(restResponse));
 
                     if ("script".equals(domain) || ("automation".equals(domain) || "scene".equals(domain) || "trigger".equals(service))) {
                         showToast("toast_triggered");
@@ -546,9 +515,6 @@ public class MainActivity extends HomeHubActivity implements
                         for (Entity entity : restResponse) {
                             getContentResolver().update(Uri.parse("content://com.homehub.dragan.myhomehub.Classes.provider.EntityContentProvider/"), entity.getContentValues(), "ENTITY_ID='" + entity.entityId + "'", null);
                         }
-                        //RxPayload payload = RxPayload.getInstance("UPDATE_ALL");
-                        //payload.entities = restResponse;
-                        //mEventEmitter.onNext(payload);
                     }
                 }
 
@@ -619,7 +585,6 @@ public class MainActivity extends HomeHubActivity implements
         @Override
         protected ErrorMessage doInBackground(Void... params) {
             try {
-                Log.d("Yo", "Connecting");
                 Response<ArrayList<Entity>> response = ServiceProvider.getApiService(mCurrentServer.getBaseUrl()).getStates(mCurrentServer.getBearerHeader()).execute();
                 if (response.code() != 200) {
                     return new ErrorMessage("Error", response.message());
@@ -651,14 +616,12 @@ public class MainActivity extends HomeHubActivity implements
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            //setStatus(values[0]);
         }
 
         @Override
         protected void onPostExecute(final ErrorMessage errorMessage) {
 
             mRefreshTask = null;
-            //mBottomNavigation.getMenu().findItem(R.id.action_settings).setEnabled(true);
             mSwipeRefresh.setRefreshing(false);
 
             if (errorMessage != null) {
@@ -689,9 +652,6 @@ public class MainActivity extends HomeHubActivity implements
     public void showEdit(View v) {
         Bundle bundle = new Bundle();
         bundle.putString("group", CommonUtil.deflate(getCurrentEntityFragment().getGroup()));
-        //Intent i = new Intent(this, EditActivity.class);
-        //i.putExtras(bundle);
-        //startActivityForResult(i, 2001);
     }
 
     private class ServerAdapter extends ArrayAdapter<HomeHubServer> {
@@ -772,7 +732,6 @@ public class MainActivity extends HomeHubActivity implements
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            Log.d("Yo", uri.toString());
             if (uri == null) return;
 
             DatabaseManager databaseManager = DatabaseManager.getInstance(MainActivity.this);
@@ -790,7 +749,5 @@ public class MainActivity extends HomeHubActivity implements
                 }
             }
         }
-
     }
-
 }

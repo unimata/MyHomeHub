@@ -3,8 +3,6 @@ package com.homehub.dragan.myhomehub.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +12,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.homehub.dragan.myhomehub.Classes.RoutineList;
-import com.homehub.dragan.myhomehub.Classes.model.Trigger;
-
-import com.homehub.dragan.myhomehub.R;
 import com.homehub.dragan.myhomehub.Classes.model.Routine;
+import com.homehub.dragan.myhomehub.Classes.model.Trigger;
+import com.homehub.dragan.myhomehub.R;
 import com.homehub.dragan.myhomehub.UI.RoutineRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -35,13 +32,11 @@ public class AutomationActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
                     intent = new Intent(AutomationActivity.this, MainActivity.class);
-                    //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
                     AutomationActivity.super.finish();
                     return true;
                 case R.id.navigation_account:
                     intent = new Intent(AutomationActivity.this, AccountActivity.class);
-                    //intent.putExtra("channel", "4lmrrOD8Ll2SkO2A");
                     startActivity(intent);
                     AutomationActivity.super.finish();
                     return true;
@@ -63,17 +58,17 @@ public class AutomationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_automation);
 
         //RecyclerView rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
-        rvRoutines = (RecyclerView) findViewById(R.id.rvAutomationRoutines);
+        rvRoutines = findViewById(R.id.rvAutomationRoutines);
         //rvRoutines.getAdapter().bindViewHolder()
 
         refreshRoutineList();
 
-        Button btnNewRoutine = (Button) findViewById(R.id.btnCreateRoutine);
-        Button btnTestRoutines = (Button) findViewById(R.id.btnTestRoutines);
+        Button btnNewRoutine = findViewById(R.id.btnCreateRoutine);
+        Button btnTestRoutines = findViewById(R.id.btnTestRoutines);
 
         btnTestRoutines.setVisibility(View.GONE);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_automation);
 
@@ -112,7 +107,6 @@ public class AutomationActivity extends AppCompatActivity {
     private ArrayList<Routine> getRoutineList() {
         ArrayList<Routine> list = items;
         //list.add(new Routine("Bolbu","go o", "noon"));
-        //Log.d("debuggin", list.toString());
         return list;
     }
 

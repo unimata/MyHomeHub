@@ -85,11 +85,6 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_add_device, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
-        //CommonUtil.setMenuDrawableColor(getContext(), menu.findItem(R.id.action_search), R.color.md_white_1000);
-        //mMenuSearch = menu.findItem(R.id.action_search);
-        //mMenuClearSearch = menu.findItem(R.id.action_clear_search);
-        //mMenuClearSearch.setVisible(mAdapter.isFilterState());
     }
 
     @Override
@@ -144,12 +139,6 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
         };
         mSafeObserver = new SafeObserver<>(observer);
 
-//        ((MainActivity) getActivity()).getEventSubject()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(mSafeObserver);
-
-
         setupRecyclerView(rootView);
         return rootView;
     }
@@ -167,19 +156,14 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
 
     private void setupRecyclerView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
-        //mSwipeRefresh = rootView.findViewById(R.id.swipe_refresh_layout);
-        //rootView.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.md_grey_200, null));
-        //rootView.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.md_white_1000, null));
         mRecyclerView.setHasFixedSize(true);
 
         Log.d("YouQi", "setup: " + mGroup.groupName + " isActive?" + (isActiveFragment() ? "Yes" : "No"));
 
-        //mEntities = DatabaseManager.getInstance(getActivity()).getEntitiesByGroup(mGroup.groupId);
         mEntities = new ArrayList<>();
         new QueryEntitiesByGroupAsyncTask(getContext(), mGroup, new EntityAsyncCallback() {
             @Override
             public void onFinished(final ArrayList<Entity> entities) {
-                Log.d("YouQi", "mEntities for " + mGroup.groupId + ": " + entities.size());
 
                 if (!isActiveFragment()) {
                     mProgressBarCircle.setVisibility(View.GONE);
@@ -194,9 +178,6 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
                     public void onAnimationEnd(Animator rootAnimation) {
                         super.onAnimationEnd(rootAnimation);
                         mProgressBarCircle.setVisibility(View.GONE);
-                        //mEntities.clear();
-                        //mEntities.addAll(entities);
-                        //mAdapter.notifyDataSetChanged();
                         mAdapter.updateList(entities);
 
                         Context context = getContext();
@@ -207,14 +188,11 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
                     }
                 });
 
-                //if (mEntities.size() > 0) mProgressBarCircle.setVisibility(View.GONE);
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         mAdapter = new EntityAdapter(getContext(), this, mEntities);
         mRecyclerView.setAdapter(mAdapter);
-        //mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).showLastDivider().paint(getDividerPaint()).build());
-        //mRecyclerView.setEmptyView(rootView.findViewById(R.id.empty_view));
         refreshPreferenceConfigs();
     }
 
@@ -238,10 +216,8 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
             display.getMetrics(outMetrics);
 
             float density = getResources().getDisplayMetrics().density;
-            //float dpHeight = outMetrics.heightPixels / density;
             float dpWidth = outMetrics.widthPixels / density;
 
-            //final int spanCount = getResources().getInteger(R.integer.grid_columns);
             int spanCount = (int) Math.floor(dpWidth / 90.0d);
             final int prefCount = Integer.parseInt(mSharedPref.getString("num_columns", "0"));
             if (prefCount != 0) {
@@ -254,7 +230,7 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     }
 
     public void search(String query) {
-        if(mAdapter == null) { return; /* Or raise exception? */ }
+        if(mAdapter == null) { return; }
 
         //Do some magic
         ArrayList<Entity> filteredItems = new ArrayList<>();
@@ -262,19 +238,16 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
             if (item.getFriendlyDomainName().toUpperCase(Locale.getDefault()).contains(query.toUpperCase(Locale.getDefault()))
                     || item.getFriendlyName().toUpperCase(Locale.getDefault()).contains(query.toUpperCase(Locale.getDefault()))) {
                 filteredItems.add(item);
-                Log.d("YouQi", "Added Filter: " + item.entityId);
             }
         }
         mAdapter.updateFilterList(filteredItems);
 
         mMenuClearSearch.setVisible(true);
-        //mMenuSearch.setVisible(false);
     }
 
     public void clearSearch() {
         mAdapter.clearFilter();
         mMenuClearSearch.setVisible(false);
-        //mMenuSearch.setVisible(true);
     }
 
     public Group getGroup() {
@@ -301,12 +274,10 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
 
     @Override
     public void onEntityUpperViewClick(EntityAdapter.EntityTileViewHolder viewHolder, final Entity entity) {
-        Log.d("YouQi", "onEntityUpperViewClick");
         triggerAnswer(entity, "single");
         if (getActivity() instanceof EntityProcessInterface) {
             boolean isConsumed = EntityHandlerHelper.onEntityClick((EntityProcessInterface) getActivity(), entity);
             if (isConsumed) {
-                Log.d("yo","conssumed");
                 if (mSharedPref.getBoolean("sound_effect", true)) {
                     if (viewHolder.isActivated()) {
                         mClickUp.start();
@@ -321,7 +292,6 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     @Override
     public boolean onEntityUpperViewLongClick(EntityAdapter.EntityTileViewHolder viewHolder, Entity entity) {
         Boolean consumed = EntityHandlerHelper.onEntityLongClick((EntityProcessInterface) getActivity(), entity);
-        Log.d("YouQi", consumed.toString());
         triggerAnswer(entity, "long");
         if (consumed) {
             if (mSharedPref.getBoolean("sound_effect", true)) {
@@ -336,7 +306,6 @@ public class EntityFragment extends BaseFragment implements EntityInterface {
     }
 
     private void triggerAnswer(Entity entity, String clickType) {
-        Log.d("YouQi", "Stub!");
     }
 }
 

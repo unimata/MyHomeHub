@@ -2,7 +2,6 @@ package com.homehub.dragan.myhomehub.Classes.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
@@ -48,7 +47,6 @@ public class Entity {
                 entity.displayOrder = cursor.getInt(cursor.getColumnIndex("DISPLAY_ORDER"));
             }
         } catch (Exception e) {
-            Log.d("YouQi", "Cursor: " + cursor.getString(cursor.getColumnIndex("RAW_JSON")));
             e.printStackTrace();
         }
         return entity;
@@ -240,10 +238,6 @@ public class Entity {
             return state.equals("home") ? "Home" : "Away";
         }
 
-        if (isAlarmControlPanel()) {
-            return CommonUtil.getNameTitleCase(state.replace("_", " "));
-        }
-
         if (isPersistentNotification()) {
             return "Notification";
         }
@@ -269,19 +263,7 @@ public class Entity {
             return MDIFont.getIcon(attributes.icon);
         }
 
-        if (isAlarmControlPanel()) {
-            switch (state) {
-                case "armed_away":
-                    return MDIFont.getIcon("mdi:pine-tree");
-                case "disarmed":
-                    return MDIFont.getIcon("mdi:bell-outline");
-                case "armed_home":
-                    return MDIFont.getIcon("mdi:home");
-                case "pending":
-                default:
-                    return MDIFont.getIcon("mdi:alarm");
-            }
-        } else if (isScene()) {
+        if (isScene()) {
             return MDIFont.getIcon("mdi:format-paint");
         } else if (isFan()) {
             return MDIFont.getIcon("mdi:fan");
@@ -428,23 +410,7 @@ public class Entity {
         String deviceClass = getDeviceClassState();
         if (deviceClass != null) {
             friendlyState = deviceClass;
-        } else if (isAlarmControlPanel()) {
-            switch (state) {
-                case "armed_away":
-                    friendlyState = "Armed Away";
-                    break;
-                case "disarmed":
-                    friendlyState = "Disarmed";
-                    break;
-                case "armed_home":
-                    friendlyState = "Armed Home";
-                    break;
-                case "pending":
-                default:
-                    friendlyState = "Pending";
-                    break;
-            }
-        } else if (isSwitch() || isLight() || isAutomation() || isBinarySensor() || isScript() || isInputBoolean() || isMediaPlayer() || isGroup()) {
+        } else if (isSwitch() || isLight() || isAutomation() || isBinarySensor() || isScript() || isInputBoolean() || isMediaPlayer()) {
             friendlyState = friendlyState.toUpperCase(Locale.getDefault());
         }
 
@@ -452,7 +418,6 @@ public class Entity {
     }
 
     public boolean isCurrentStateActive() {
-        Log.d("yoooo",state);
         //dont look at me, its alpha
         return Math.random() > 0.5;
         //return "ON".equals(state.toUpperCase());
@@ -461,22 +426,11 @@ public class Entity {
         return "turn_" + (isCurrentStateActive() ? "on" : "off");
     }
 
-    public String getFriendlyStateRow() {
-        String returnValue = getFriendlyState();
-
-        if (isAnySensors()) {
-            if (attributes != null && attributes.unitOfMeasurement != null) {
-                return String.format(Locale.ENGLISH, "%s %s", state, attributes.unitOfMeasurement);
-            }
-        }
-        return returnValue;
-    }
-
     public boolean isActivated() {
         if (isMediaPlayer()) {
             return !state.toUpperCase(Locale.getDefault()).equals("OFF");
         } else if (isSun()) {
-            return false; //state.toUpperCase().equals("ABOVE_HORIZON");
+            return false;
         } else if (isDeviceTracker()) {
             return state.toUpperCase(Locale.getDefault()).equals("HOME");
         }
@@ -509,18 +463,15 @@ public class Entity {
             return false;
 
         final Entity other = (Entity) o;
-//        if (this.checksum == null || other.checksum == null) {
-//            throw new RuntimeException("checksum is null");
-//        }
         return this.entityId.equals(other.entityId);
     }
 
     public boolean isToggleable() {
-        return isSwitch() || isLight() || isAutomation() || isScript() || isInputBoolean() || isGroup() || isFan() || isVacuum(); //|| isMediaPlayer()
+        return isSwitch() || isLight() || isAutomation() || isScript() || isInputBoolean();
     }
 
     public boolean isCircle() {
-        return isSensor() || isSun() || isAnySensors() || isDeviceTracker() || isAlarmControlPanel();
+        return isSensor() || isSun() || isAnySensors() || isDeviceTracker();
     }
 
     public LatLng getLocation() {

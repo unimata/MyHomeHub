@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.homehub.dragan.myhomehub.Classes.model.Entity;
@@ -29,7 +28,6 @@ import com.homehub.dragan.myhomehub.Classes.util.CommonUtil;
 import com.homehub.dragan.myhomehub.Classes.util.EntityHandlerHelper;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -52,7 +50,7 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
     private Toast mToast;
     private boolean isJobComplete = false;
 
-    //Bound Service (Experimental)
+    //Bound Service
     private Subject<RxPayload> mEventEmitter = PublishSubject.create();
     private DataSyncService mService;
     private SafeObserver<RxPayload> mSafeObserver;
@@ -60,7 +58,6 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
             DataSyncService.LocalBinder binder = (DataSyncService.LocalBinder) service;
             mService = binder.getService();
             mBound = true;
@@ -145,17 +142,12 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
 
     @Override
     public void callService(final String domain, final String service, CallServiceRequest serviceRequest) {
-        Log.d("YouQi", String.format(Locale.ENGLISH, "callService(%s, %s) in TransparentActivity: %s", domain, service, CommonUtil.deflate(serviceRequest)));
         if (mCall == null) {
-            //showNetworkBusy();
             mCall = ServiceProvider.getApiService(mCurrentServer.getBaseUrl()).callService(mCurrentServer.getBearerHeader(), domain, service, serviceRequest);
             mCall.enqueue(new Callback<ArrayList<Entity>>() {
                 @Override
                 public void onResponse(@NonNull Call<ArrayList<Entity>> call, @NonNull Response<ArrayList<Entity>> response) {
                     mCall = null;
-                    //showNetworkIdle();
-
-
                     ArrayList<Entity> restResponse = response.body();
 
                     if (restResponse != null) {
@@ -168,17 +160,13 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
                             }
                         }
                     }
-                    Log.d("YouQi", "callService JobCompleted");
                     if (isJobComplete) finish();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ArrayList<Entity>> call, @NonNull Throwable t) {
                     mCall = null;
-
                     if (isJobComplete) finish();
-                    //showNetworkIdle();
-                    //showError(FaultUtil.getPrintableMessage(MainActivity.this, t));
                 }
             });
         }
@@ -195,13 +183,6 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-
-//        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-//            Log.d("YouQi", "Loading...");
-//            mInterstitialAd.show();
-//        } else {
-//            Log.d("YouQi", "The interstitial wasn't loaded yet.");
-//        }
         finish();
     }
 
@@ -216,16 +197,12 @@ public class BackgroundActivity extends HomeHubActivity implements DialogInterfa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("YouQi", "onDestroy");
 
         if (mSafeObserver != null) mSafeObserver.dispose();
         if (mBound) {
-            //mService.stopWebSocket();
             getApplicationContext().unbindService(mConnection);
             mBound = false;
         }
-
-        //mEventEmitter.onComplete();
     }
 
     public Activity getActivity() {
